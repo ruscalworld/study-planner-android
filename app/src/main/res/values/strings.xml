@@ -2,6 +2,12 @@
     <!-- GENERAL -->
     <string name="app_name">Study Planner</string>
 
+    <!-- NAVIGATION -->
+    <string name="navigation_section_diary">Diary</string>
+    <string name="navigation_section_stats">Stats</string>
+    <string name="navigation_section_editor">Editor</string>
+    <string name="navigation_section_options">Options</string>
+
     <!-- SCREENS -->
     <!-- Start -> Auth -->
     <string name="auth_error_failed">Unable to authenticate</string>
