@@ -43,13 +43,21 @@ val headlineFontFamily = FontFamily(
 val baseline = Typography()
 
 val AppTypography = Typography(
-    displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),
+    displayLarge = baseline.displayLarge.copy(
+        fontFamily = displayFontFamily,
+        fontSize = TextUnit(22f, TextUnitType.Sp),
+        lineHeight = TextUnit(1.3f, TextUnitType.Em),
+    ),
     displayMedium = baseline.displayMedium.copy(
+        fontFamily = displayFontFamily,
+        fontSize = TextUnit(20f, TextUnitType.Sp),
+        lineHeight = TextUnit(1.3f, TextUnitType.Em),
+    ),
+    displaySmall = baseline.displaySmall.copy(
         fontFamily = displayFontFamily,
         fontSize = TextUnit(18f, TextUnitType.Sp),
         lineHeight = TextUnit(1.3f, TextUnitType.Em),
     ),
-    displaySmall = baseline.displaySmall.copy(fontFamily = displayFontFamily),
     headlineLarge = baseline.headlineLarge.copy(
         fontFamily = headlineFontFamily,
         fontWeight = FontWeight.Bold,
@@ -63,18 +71,34 @@ val AppTypography = Typography(
         color = PrimaryColor,
         lineHeight = TextUnit(1.3f, TextUnitType.Em),
     ),
-    headlineSmall = baseline.headlineSmall.copy(fontFamily = headlineFontFamily),
-    titleLarge = baseline.titleLarge.copy(fontFamily = headlineFontFamily),
-    titleMedium = baseline.titleMedium.copy(fontFamily = headlineFontFamily),
+    headlineSmall = baseline.headlineSmall.copy(
+        fontFamily = headlineFontFamily,
+    ),
+    titleLarge = baseline.titleLarge.copy(
+        fontFamily = displayFontFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = TextUnit(28f, TextUnitType.Sp),
+        lineHeight = TextUnit(1.3f, TextUnitType.Em),
+    ),
+    titleMedium = baseline.titleMedium.copy(
+        fontFamily = displayFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = TextUnit(26f, TextUnitType.Sp),
+        lineHeight = TextUnit(1.3f, TextUnitType.Em),
+    ),
     titleSmall = baseline.titleSmall.copy(fontFamily = headlineFontFamily),
     bodyLarge = baseline.bodyLarge.copy(fontFamily = bodyFontFamily),
     bodyMedium = baseline.bodyMedium.copy(
         fontFamily = bodyFontFamily,
-        fontSize = TextUnit(18f, TextUnitType.Sp)
+        fontSize = TextUnit(18f, TextUnitType.Sp),
     ),
     bodySmall = baseline.bodySmall.copy(fontFamily = bodyFontFamily),
     labelLarge = baseline.labelLarge.copy(fontFamily = bodyFontFamily),
-    labelMedium = baseline.labelMedium.copy(fontFamily = bodyFontFamily),
+    labelMedium = baseline.labelMedium.copy(
+        fontFamily = bodyFontFamily,
+        color = SecondaryText,
+        fontSize = TextUnit(18f, TextUnitType.Sp)
+    ),
     labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily),
 )
 

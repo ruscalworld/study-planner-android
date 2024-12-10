@@ -58,6 +58,13 @@
     <string name="editor_task_loading_description">This could take a few seconds</string>
 
     <!-- Options -> Info -->
+    <string name="options_info_logo_description">Study Planner Logo</string>
+    <string name="options_info_app_name">Study Planner</string>
+    <string name="options_info_app_description">Sample app description</string>
+    <string name="options_info_curriculums_title">Curriculums</string>
+    <string name="options_info_curriculums_add">Add curriculum</string>
+    <string name="options_info_other_title">Other</string>
+    <string name="options_info_other_sign_out">Sign out</string>
 <!--    <string name="options_info_loading_title">Loading…</string>-->
 <!--    <string name="options_info_loading_description">This could take a few seconds</string>-->
 
