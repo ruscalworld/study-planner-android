@@ -1,0 +1,64 @@
+<resources>
+    <!-- GENERAL -->
+    <string name="app_name">Study Planner</string>
+
+    <!-- SCREENS -->
+    <!-- Start -> Auth -->
+    <string name="auth_error_failed">Unable to authenticate</string>
+    <string name="auth_error_invalid_credential">Invalid credential type faced</string>
+    <string name="auth_error_no_credential">No credential available</string>
+
+    <string name="start_welcome_title">Welcome!</string>
+    <string name="start_welcome_text">Please sign in to use the app.</string>
+    <string name="start_welcome_authenticate">Sign in</string>
+
+    <!-- Start -> Curriculum -->
+    <string name="start_curriculum_title">Find a curriculum</string>
+    <string name="start_curriculum_text">
+        Curriculums include your disciplines and tasks.
+        Use invite code to get a ready one or create a new.
+    </string>
+    <string name="start_curriculum_code_placeholder">Enter invite code</string>
+    <string name="start_curriculum_create_new">Create a new curriculum</string>
+    <string name="start_curriculum_add_existing">Add curriculum</string>
+    <string name="start_curriculum_add_existing_unknown_error">Could not add curriculum</string>
+
+    <!-- Diary -> Home -->
+    <string name="diary_home_loading_title">Loading…</string>
+    <string name="diary_home_loading_description">This could take a few seconds</string>
+
+    <!-- Diary -> Discipline -->
+    <string name="diary_discipline_loading_title">Loading…</string>
+    <string name="diary_discipline_loading_description">This could take a few seconds</string>
+
+    <!-- Diary -> Task -->
+    <string name="diary_task_loading_title">Loading…</string>
+    <string name="diary_task_loading_description">This could take a few seconds</string>
+
+    <!-- Stats -> Home -->
+    <string name="stats_home_loading_title">Loading…</string>
+    <string name="stats_home_loading_description">This could take a few seconds</string>
+
+    <!-- Editor -> Curriculum -->
+    <string name="editor_curriculum_loading_title">Loading…</string>
+    <string name="editor_curriculum_loading_description">This could take a few seconds</string>
+
+    <!-- Editor -> Discipline -->
+    <string name="editor_discipline_loading_title">Loading…</string>
+    <string name="editor_discipline_loading_description">This could take a few seconds</string>
+
+    <!-- Editor -> Task -->
+    <string name="editor_task_loading_title">Loading…</string>
+    <string name="editor_task_loading_description">This could take a few seconds</string>
+
+    <!-- Options -> Info -->
+<!--    <string name="options_info_loading_title">Loading…</string>-->
+<!--    <string name="options_info_loading_description">This could take a few seconds</string>-->
+
+    <!-- FORMS -->
+    <!-- Create curriculum -->
+    <string name="form_curriculum_create_title">Create curriculum</string>
+    <string name="form_curriculum_create_name_label">Curriculum name</string>
+    <string name="form_curriculum_create_confirm_text">Create</string>
+    <string name="form_curriculum_create_unknown_error">Could not create a curriculum</string>
+</resources>
