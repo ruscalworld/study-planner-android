@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.lottie.compose)
     implementation(libs.lottie)
+    implementation(project(":provisioning:backend"))
+    implementation(libs.androidx.datastore.preferences)
     compileOnly(libs.hilt.android.gradle.plugin)
     kapt(libs.androidx.hilt.compiler)
     kapt(libs.hilt.android.compiler)

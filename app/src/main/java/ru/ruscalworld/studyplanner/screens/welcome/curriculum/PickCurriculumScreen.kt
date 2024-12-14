@@ -33,24 +33,26 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.ruscalworld.studyplanner.R
+import ru.ruscalworld.studyplanner.common.ExceptionHandler
 import ru.ruscalworld.studyplanner.core.model.Curriculum
 import ru.ruscalworld.studyplanner.forms.curriculum.create.CreateCurriculumModal
-import ru.ruscalworld.studyplanner.navigation.EntityRouteKey
 import ru.ruscalworld.studyplanner.ui.elements.button.Button
 import ru.ruscalworld.studyplanner.ui.elements.field.Field
-import ru.ruscalworld.studyplanner.common.ExceptionHandler
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
 
 
 @Composable
-fun PickCurriculumScreen(viewModel: PickCurriculumViewModel = hiltViewModel(), navigateToCurriculum: (EntityRouteKey<Long>) -> Unit) {
+fun PickCurriculumScreen(
+    viewModel: PickCurriculumViewModel = hiltViewModel(),
+    navigateToCurriculum: (Long) -> Unit,
+) {
     val state by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     SnackbarHost(hostState = snackbarHostState)
 
     LaunchedEffect(state.curriculum) {
-        state.curriculum?.let { navigateToCurriculum(EntityRouteKey.from(it)) }
+        state.curriculum?.let { navigateToCurriculum(it.id) }
     }
 
     ExceptionHandler(
@@ -72,7 +74,7 @@ fun PickCurriculumScreen(viewModel: PickCurriculumViewModel = hiltViewModel(), n
         ActionArea(
             isLoading = state.isLoading,
             snackbarHostState = snackbarHostState,
-            onCurriculumCreated = { navigateToCurriculum(EntityRouteKey.from(it)) },
+            onCurriculumCreated = { navigateToCurriculum(it.id) },
             onAddExistingRequest = { viewModel.addExistingCurriculum(it) }
         )
     }

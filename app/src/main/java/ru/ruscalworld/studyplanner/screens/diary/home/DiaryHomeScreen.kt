@@ -1,6 +1,7 @@
 package ru.ruscalworld.studyplanner.screens.diary.home
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -9,11 +10,11 @@ import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.adapters.DisciplineCard
 import ru.ruscalworld.studyplanner.adapters.TaskCard
 import ru.ruscalworld.studyplanner.common.CommonLayout
+import ru.ruscalworld.studyplanner.common.ExceptionHandler
 import ru.ruscalworld.studyplanner.common.LoadingScreen
 import ru.ruscalworld.studyplanner.core.model.CompletionProgress
 import ru.ruscalworld.studyplanner.core.model.Discipline
 import ru.ruscalworld.studyplanner.core.model.Task
-import ru.ruscalworld.studyplanner.navigation.NavigateTo
 import ru.ruscalworld.studyplanner.ui.elements.card.NamedCardContainer
 import java.util.Date
 
@@ -25,11 +26,22 @@ fun DiaryHomeScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.load()
+    }
+
+    ExceptionHandler(
+        throwable = state.error,
+        unknownErrorMessage = R.string.diary_home_unknown_error,
+    )
+
     if (state.isLoading) {
         LoadingScreen(
             title = { stringResource(R.string.diary_home_loading_title) },
             description = { stringResource(R.string.diary_home_loading_description) },
         )
+
+        return
     }
 
     CommonLayout {

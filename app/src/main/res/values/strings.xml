@@ -24,6 +24,16 @@
     <string name="navigation_section_options">Options</string>
 
     <!-- COMMON COMPONENTS -->
+    <!-- Curriculum Cards -->
+    <string name="common_curriculum_card_semester">%1$d semester</string>
+
+    <!-- Discipline Cards -->
+    <string name="common_discipline_card_tasks_total">%1$d %2$s</string>
+    <plurals name="common_discipline_card_tasks_total">
+        <item quantity="one">task</item>
+        <item quantity="other">tasks</item>
+    </plurals>
+
     <!-- Task Cards -->
     <string name="common_task_card_deadline">%1$d %2$s (%3$s)</string>
     <string name="common_task_card_time_estimation">≈ %1$d %2$s</string>
@@ -33,7 +43,10 @@
     <string name="auth_error_failed">Unable to authenticate</string>
     <string name="auth_error_invalid_credential">Invalid credential type faced</string>
     <string name="auth_error_no_credential">No credential available</string>
+    <string name="auth_error_unknown">Error communicating with server for authentication. Try again later.</string>
 
+    <string name="start_welcome_loading_title">Loading…</string>
+    <string name="start_welcome_loading_description">This could take a few seconds</string>
     <string name="start_welcome_title">Welcome!</string>
     <string name="start_welcome_text">Please sign in to use the app.</string>
     <string name="start_welcome_authenticate">Sign in</string>
@@ -52,6 +65,9 @@
     <!-- Diary -> Home -->
     <string name="diary_home_loading_title">Loading…</string>
     <string name="diary_home_loading_description">This could take a few seconds</string>
+    <string name="diary_home_unknown_error">Unable to load data</string>
+    <string name="diary_home_error_no_curriculum">No curriculum picked</string>
+
     <string name="diary_home_prioritized_tasks_title">Prioritized tasks</string>
     <string name="diary_home_prioritized_tasks_description">Upcoming deadlines</string>
     <string name="diary_home_disciplines_title">Disciplines</string>
@@ -84,6 +100,7 @@
     <!-- Editor -> Curriculum -->
     <string name="editor_curriculum_loading_title">Loading…</string>
     <string name="editor_curriculum_loading_description">This could take a few seconds</string>
+    <string name="editor_curriculum_error_no_curriculum">No curriculum picked</string>
 
     <string name="editor_curriculum_title">Curriculum</string>
     <string name="editor_curriculum_name_label">Name</string>
@@ -115,6 +132,10 @@
     <string name="editor_task_deadline_pick_dismiss">Cancel</string>
 
     <!-- Options -> Info -->
+    <string name="options_info_loading_title">Loading…</string>
+    <string name="options_info_loading_description">This could take a few seconds</string>
+    <string name="options_info_unknown_error">Unable to load curriculums</string>
+
     <string name="options_info_logo_description">Study Planner Logo</string>
     <string name="options_info_app_name">Study Planner</string>
     <string name="options_info_app_description">Sample app description</string>
@@ -122,8 +143,6 @@
     <string name="options_info_curriculums_add">Add curriculum</string>
     <string name="options_info_other_title">Other</string>
     <string name="options_info_other_sign_out">Sign out</string>
-<!--    <string name="options_info_loading_title">Loading…</string>-->
-<!--    <string name="options_info_loading_description">This could take a few seconds</string>-->
 
     <!-- FORMS -->
     <!-- Create curriculum -->

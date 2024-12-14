@@ -14,10 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.ruscalworld.studyplanner.R
+import ru.ruscalworld.studyplanner.common.ExceptionHandler
 import ru.ruscalworld.studyplanner.core.model.Curriculum
 import ru.ruscalworld.studyplanner.ui.elements.field.Field
 import ru.ruscalworld.studyplanner.ui.elements.form.BottomSheetForm
-import ru.ruscalworld.studyplanner.common.ExceptionHandler
 
 @Composable
 fun CreateCurriculumModal(
@@ -45,7 +45,7 @@ fun CreateCurriculumModal(
         isVisible = modalOpen,
         isLoading = state.isLoading,
         onConfirm = {
-            viewModel.createCurriculum(CreateCurriculumRequest(name.text))
+            viewModel.createCurriculum(Curriculum.CreateRequest(name.text, 1))
         },
         titleText = { stringResource(R.string.form_curriculum_create_title) },
         onClosed = onClosed,
@@ -58,7 +58,3 @@ fun CreateCurriculumModal(
         )
     }
 }
-
-data class CreateCurriculumRequest(
-    val name: String,
-)

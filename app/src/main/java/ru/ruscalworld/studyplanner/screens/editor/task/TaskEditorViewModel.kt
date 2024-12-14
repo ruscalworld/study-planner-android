@@ -1,7 +1,6 @@
 package ru.ruscalworld.studyplanner.screens.editor.task
 
 import android.util.Log
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
@@ -12,10 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.ruscalworld.studyplanner.core.model.Discipline
 import ru.ruscalworld.studyplanner.core.model.Task
-import ru.ruscalworld.studyplanner.screens.editor.discipline.DisciplineEditorState
-import ru.ruscalworld.studyplanner.screens.editor.discipline.DisciplineEditorViewModel.Companion.TAG
 import java.util.Date
 import javax.inject.Inject
 

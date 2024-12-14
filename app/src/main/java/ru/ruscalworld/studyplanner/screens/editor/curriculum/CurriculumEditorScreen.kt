@@ -2,9 +2,12 @@ package ru.ruscalworld.studyplanner.screens.editor.curriculum
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -13,8 +16,9 @@ import androidx.compose.ui.text.toUpperCase
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.adapters.DisciplineCard
-import ru.ruscalworld.studyplanner.common.InputGroup
 import ru.ruscalworld.studyplanner.common.CommonLayout
+import ru.ruscalworld.studyplanner.common.ExceptionHandler
+import ru.ruscalworld.studyplanner.common.InputGroup
 import ru.ruscalworld.studyplanner.common.LoadingScreen
 import ru.ruscalworld.studyplanner.common.TextFieldRow
 import ru.ruscalworld.studyplanner.core.model.Discipline
@@ -30,12 +34,25 @@ fun CurriculumEditorScreen(
     val state by viewModel.uiState.collectAsState()
     val name by viewModel.name.collectAsState()
     val semesterNo by viewModel.semesterNo.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.load()
+    }
+
+    ExceptionHandler(
+        throwable = state.error,
+        unknownErrorMessage = R.string.editor_discipline_unknown_error,
+        snackbarHostState = snackbarHostState,
+    )
 
     if (state.isLoading) {
         LoadingScreen(
             title = { stringResource(R.string.editor_curriculum_loading_title) },
             description = { stringResource(R.string.editor_curriculum_loading_description) },
         )
+
+        return
     }
 
     CommonLayout {

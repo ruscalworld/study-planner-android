@@ -13,15 +13,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.core.model.CompletionProgress
 import ru.ruscalworld.studyplanner.core.model.Discipline
-import ru.ruscalworld.studyplanner.navigation.EntityRouteKey
-import ru.ruscalworld.studyplanner.navigation.NavigateTo
 import ru.ruscalworld.studyplanner.ui.elements.card.Card
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
 import ru.ruscalworld.studyplanner.ui.theme.PrimaryColor
@@ -49,10 +50,21 @@ fun DisciplineCard(
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                 )
-                Text(
-                    "Sample Text",
-                    style = AppTypography.labelMedium,
-                )
+
+                progress?.let {
+                    Text(
+                        stringResource(
+                            R.string.common_discipline_card_tasks_total,
+                            it.tasksTotal,
+                            LocalContext.current.resources.getQuantityString(
+                                R.plurals.common_discipline_card_tasks_total,
+                                it.tasksTotal,
+                            ),
+                        ),
+
+                        style = AppTypography.labelMedium,
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.width(16.dp))

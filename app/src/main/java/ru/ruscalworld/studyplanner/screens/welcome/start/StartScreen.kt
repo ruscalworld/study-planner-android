@@ -24,27 +24,56 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.ruscalworld.studyplanner.R
+import ru.ruscalworld.studyplanner.common.LoadingScreen
 import ru.ruscalworld.studyplanner.ui.elements.button.Button
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
 
 @Composable
-fun StartScreen(viewModel: StartViewModel = hiltViewModel(), navigateToNext: () -> Unit) {
+fun StartScreen(
+    viewModel: StartViewModel = hiltViewModel(),
+    navigateToPickCurriculum: () -> Unit,
+    navigateToHome: () -> Unit,
+) {
     val state by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val errorMessage = state.errorMessage?.let { stringResource(it) }
+
+    LaunchedEffect(Unit) {
+        viewModel.load()
+    }
 
     LaunchedEffect(errorMessage) {
         errorMessage?.let { snackbarHostState.showSnackbar(errorMessage) }
     }
 
-    LaunchedEffect(state.successfulAuth) {
-        if (state.successfulAuth) navigateToNext()
+    LaunchedEffect(state.successfulAuth, state.isCurriculumPicked) {
+        if (state.successfulAuth && state.isCurriculumPicked) {
+            navigateToHome()
+            return@LaunchedEffect
+        }
+
+        if (state.successfulAuth) {
+            navigateToPickCurriculum()
+            return@LaunchedEffect
+        }
     }
 
     SnackbarHost(hostState = snackbarHostState)
 
+    if (state.isInitialLoading) {
+        LoadingScreen(
+            title = { stringResource(R.string.start_welcome_loading_title) },
+            description = { stringResource(R.string.start_welcome_loading_description) },
+        )
+
+        return
+    }
+
     Column(
-        modifier = Modifier.safeGesturesPadding().fillMaxWidth().fillMaxHeight(),
+        modifier = Modifier
+            .safeGesturesPadding()
+            .fillMaxWidth()
+            .fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

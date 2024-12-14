@@ -6,4 +6,6 @@ data class InfoState(
     val isLoading: Boolean = true,
     val error: Throwable? = null,
     val curriculums: List<Curriculum>? = null,
+    val signedOut: Boolean = false,
+    val activeCurriculumChanged: Boolean = false,
 )

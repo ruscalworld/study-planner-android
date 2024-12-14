@@ -22,7 +22,7 @@ fun NavRoot(navController: NavHostController) {
     NavHost(navController, startDestination = "welcome/start") {
         composable("welcome/start") {
             StartScreen(
-                navigateToNext = {
+                navigateToPickCurriculum = {
                     navController.navigate("welcome/curriculum") {
                         popUpTo(navController.graph.startDestinationId) {
                             inclusive = true
@@ -30,7 +30,17 @@ fun NavRoot(navController: NavHostController) {
 
                         launchSingleTop = true
                     }
-                }
+                },
+
+                navigateToHome = {
+                    navController.navigate("diary/home") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+
+                        launchSingleTop = true
+                    }
+                },
             )
         }
 
@@ -116,7 +126,37 @@ fun NavRoot(navController: NavHostController) {
         }
 
         composable("options/info") {
-            InfoScreen()
+            InfoScreen(
+                navigateToHome = {
+                    navController.navigate("diary/home") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+
+                        launchSingleTop = true
+                    }
+                },
+
+                navigateToPickCurriculum = {
+                    navController.navigate("welcome/curriculum") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+
+                        launchSingleTop = true
+                    }
+                },
+
+                navigateToStart = {
+                    navController.navigate("welcome/start") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+
+                        launchSingleTop = true
+                    }
+                },
+            )
         }
     }
 }
