@@ -30,7 +30,7 @@ import javax.inject.Inject
 class StartViewModel @Inject constructor(@ApplicationContext val appContext: Context): ViewModel() {
     companion object {
         private const val TAG = "StartViewModel"
-        private const val WEB_CLIENT_ID = "114287429510-orefripcghpu34688slbtgvful3qios7.apps.googleusercontent.com"
+        private const val WEB_CLIENT_ID = "458392076697-scp9osmjk1rsnhqe1e0275e9d1pgn1fh.apps.googleusercontent.com"
     }
 
     private val credentialManager: CredentialManager = CredentialManager.create(appContext)

@@ -10,7 +10,7 @@ data class Task(
     val groupId: Long,
     val status: Status,
     val difficulty: Int,
-    val deadline: Date,
+    val deadline: Date?,
 ) {
     data class Group(
         val id: Long,
@@ -19,9 +19,9 @@ data class Task(
 
     data class Link(
         val id: Long,
-        val name: String,
-        val url: String,
-    )
+        override val name: String,
+        override val url: String,
+    ) : EntityLink
 
     enum class Status {
         NotPublished, Available,

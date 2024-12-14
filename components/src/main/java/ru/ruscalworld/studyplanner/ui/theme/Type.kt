@@ -31,6 +31,22 @@ val displayFontFamily = FontFamily(
     )
 )
 
+val titleFontFamily = FontFamily(
+    Font(
+        googleFont = GoogleFont("Rubik"),
+        fontProvider = provider,
+        weight = FontWeight.Bold,
+    )
+)
+
+val titleSemiFontFamily = FontFamily(
+    Font(
+        googleFont = GoogleFont("Rubik"),
+        fontProvider = provider,
+        weight = FontWeight.SemiBold,
+    )
+)
+
 val headlineFontFamily = FontFamily(
     Font(
         googleFont = GoogleFont("Rubik"),
@@ -75,18 +91,16 @@ val AppTypography = Typography(
         fontFamily = headlineFontFamily,
     ),
     titleLarge = baseline.titleLarge.copy(
-        fontFamily = displayFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontFamily = titleFontFamily,
         fontSize = TextUnit(28f, TextUnitType.Sp),
         lineHeight = TextUnit(1.3f, TextUnitType.Em),
     ),
     titleMedium = baseline.titleMedium.copy(
-        fontFamily = displayFontFamily,
-        fontWeight = FontWeight.Medium,
+        fontFamily = titleSemiFontFamily,
         fontSize = TextUnit(26f, TextUnitType.Sp),
         lineHeight = TextUnit(1.3f, TextUnitType.Em),
     ),
-    titleSmall = baseline.titleSmall.copy(fontFamily = headlineFontFamily),
+    titleSmall = baseline.titleSmall.copy(fontFamily = titleFontFamily),
     bodyLarge = baseline.bodyLarge.copy(fontFamily = bodyFontFamily),
     bodyMedium = baseline.bodyMedium.copy(
         fontFamily = bodyFontFamily,
@@ -99,6 +113,10 @@ val AppTypography = Typography(
         color = SecondaryText,
         fontSize = TextUnit(18f, TextUnitType.Sp)
     ),
-    labelSmall = baseline.labelSmall.copy(fontFamily = bodyFontFamily),
+    labelSmall = baseline.labelSmall.copy(
+        fontFamily = bodyFontFamily,
+        color = SecondaryText,
+        fontSize = TextUnit(14f, TextUnitType.Sp)
+    ),
 )
 

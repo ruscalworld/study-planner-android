@@ -23,9 +23,3 @@ class CreateCurriculumModalViewModel @Inject constructor() : ViewModel() {
         }
     }
 }
-
-data class CreateCurriculumState(
-    val isLoading: Boolean = false,
-    val error: Throwable? = null,
-    val curriculum: Curriculum? = null,
-)

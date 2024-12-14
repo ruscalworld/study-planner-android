@@ -11,3 +11,8 @@ val CardBorder = Color(0xFF2B2B2B)
 val PrimaryBackground = Color(0xFF1A694E)
 val PrimaryBorder = Color(0xFF29785D)
 val SurfaceText = Color(0xFFE7FFEB)
+
+val Red = Color(0xFFFF6262)
+val Green = Color(0xFF2FB36F)
+val Yellow = Color(0xFFDED94A)
+val Blue = Color(0xFF5482DE)

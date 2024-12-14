@@ -4,6 +4,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -28,7 +29,9 @@ fun Field(
     modifier: Modifier = Modifier,
     value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
-    label: (@Composable () -> String)?,
+    label: (@Composable () -> String)? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    lines: Int = 1,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val colors = TextFieldDefaults.colors(
@@ -47,34 +50,45 @@ fun Field(
         value = value,
         onValueChange = onValueChange,
         textStyle = TextStyle(color = Color.White, fontSize = TextUnit(18f, TextUnitType.Sp)),
-        decorationBox = @Composable { innerTextField -> OutlinedTextFieldDefaults.DecorationBox(
-            value = value.text,
-            innerTextField = innerTextField,
-            enabled = true,
-            singleLine = true,
-            visualTransformation = VisualTransformation.None,
-            interactionSource = interactionSource,
-            isError = false,
-            label = { if (label != null) Text(label(), fontSize = TextUnit(16f, TextUnitType.Sp)) },
-            placeholder = {},
-            leadingIcon = null,
-            trailingIcon = null,
-            prefix = null,
-            suffix = null,
-            supportingText = null,
-            colors = colors,
-            contentPadding = PaddingValues(24.dp, 14.dp),
-            container = {
-                OutlinedTextFieldDefaults.Container(
-                    enabled = true,
-                    isError = false,
-                    interactionSource = interactionSource,
-                    colors = colors,
-                    shape = RoundedCornerShape(10.dp),
-                    focusedBorderThickness = 2.dp,
-                    unfocusedBorderThickness = 2.dp,
-                )
-            },
-        )}
+        keyboardOptions = keyboardOptions,
+        maxLines = lines,
+        minLines = lines,
+        decorationBox = @Composable { innerTextField ->
+            OutlinedTextFieldDefaults.DecorationBox(
+                value = value.text,
+                innerTextField = innerTextField,
+                enabled = true,
+                singleLine = lines == 1,
+                visualTransformation = VisualTransformation.None,
+                interactionSource = interactionSource,
+                isError = false,
+                label = {
+                    if (label != null)
+                        Text(
+                            label(),
+                            fontSize = TextUnit(16f, TextUnitType.Sp),
+                        )
+                },
+                placeholder = {},
+                leadingIcon = null,
+                trailingIcon = null,
+                prefix = null,
+                suffix = null,
+                supportingText = null,
+                colors = colors,
+                contentPadding = PaddingValues(24.dp, 14.dp),
+                container = {
+                    OutlinedTextFieldDefaults.Container(
+                        enabled = true,
+                        isError = false,
+                        interactionSource = interactionSource,
+                        colors = colors,
+                        shape = RoundedCornerShape(10.dp),
+                        focusedBorderThickness = 2.dp,
+                        unfocusedBorderThickness = 2.dp,
+                    )
+                },
+            )
+        }
     )
 }

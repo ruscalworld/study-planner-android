@@ -1,12 +1,32 @@
 <resources>
     <!-- GENERAL -->
+    <!-- App -->
     <string name="app_name">Study Planner</string>
+
+    <!-- Time -->
+    <plurals name="time_days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
+
+    <plurals name="time_hours">
+        <item quantity="one">hour</item>
+        <item quantity="other">hours</item>
+    </plurals>
+
+    <!-- Quotes -->
+    <string name="quoted_string">“%1$s”</string>
 
     <!-- NAVIGATION -->
     <string name="navigation_section_diary">Diary</string>
     <string name="navigation_section_stats">Stats</string>
     <string name="navigation_section_editor">Editor</string>
     <string name="navigation_section_options">Options</string>
+
+    <!-- COMMON COMPONENTS -->
+    <!-- Task Cards -->
+    <string name="common_task_card_deadline">%1$d %2$s (%3$s)</string>
+    <string name="common_task_card_time_estimation">≈ %1$d %2$s</string>
 
     <!-- SCREENS -->
     <!-- Start -> Auth -->
@@ -32,6 +52,10 @@
     <!-- Diary -> Home -->
     <string name="diary_home_loading_title">Loading…</string>
     <string name="diary_home_loading_description">This could take a few seconds</string>
+    <string name="diary_home_prioritized_tasks_title">Prioritized tasks</string>
+    <string name="diary_home_prioritized_tasks_description">Upcoming deadlines</string>
+    <string name="diary_home_disciplines_title">Disciplines</string>
+    <string name="diary_home_disciplines_description">All tasks</string>
 
     <!-- Diary -> Discipline -->
     <string name="diary_discipline_loading_title">Loading…</string>
@@ -41,6 +65,18 @@
     <string name="diary_task_loading_title">Loading…</string>
     <string name="diary_task_loading_description">This could take a few seconds</string>
 
+    <string name="diary_task_status_title">Status</string>
+    <string name="diary_task_status_not_started">Not started</string>
+    <string name="diary_task_status_in_progress">In progress</string>
+    <string name="diary_task_status_needs_protection">Needs protection</string>
+    <string name="diary_task_status_completed">Completed</string>
+    <string name="diary_task_status_edit_button">Change status</string>
+
+    <string name="diary_task_transition_mark_as_in_progress">Mark as in progress</string>
+    <string name="diary_task_transition_mark_as_completed">Mark as completed</string>
+    <string name="diary_task_transition_mark_as_not_started">Mark as not started</string>
+    <string name="diary_task_transition_mark_as_needs_protection">Mark as needs protection</string>
+
     <!-- Stats -> Home -->
     <string name="stats_home_loading_title">Loading…</string>
     <string name="stats_home_loading_description">This could take a few seconds</string>
@@ -49,13 +85,34 @@
     <string name="editor_curriculum_loading_title">Loading…</string>
     <string name="editor_curriculum_loading_description">This could take a few seconds</string>
 
+    <string name="editor_curriculum_title">Curriculum</string>
+    <string name="editor_curriculum_name_label">Name</string>
+    <string name="editor_curriculum_semester_no_label">Semester number</string>
+
+    <string name="editor_curriculum_disciplines_title">Disciplines</string>
+
     <!-- Editor -> Discipline -->
     <string name="editor_discipline_loading_title">Loading…</string>
     <string name="editor_discipline_loading_description">This could take a few seconds</string>
+    <string name="editor_discipline_unknown_error">Unable to load discipline data</string>
+
+    <string name="editor_discipline_title">Discipline</string>
+    <string name="editor_discipline_task_no_description">No description</string>
+    <string name="editor_discipline_name_label">Name</string>
 
     <!-- Editor -> Task -->
     <string name="editor_task_loading_title">Loading…</string>
     <string name="editor_task_loading_description">This could take a few seconds</string>
+    <string name="editor_task_unknown_error">Unable to load task data</string>
+
+    <string name="editor_task_title">Task</string>
+    <string name="editor_task_name_label">Name</string>
+    <string name="editor_task_external_name_label">Short description</string>
+    <string name="editor_task_description_label">Description</string>
+    <string name="editor_task_difficulty_label">Hours required</string>
+    <string name="editor_task_deadline_label">Deadline</string>
+    <string name="editor_task_deadline_pick_confirm">Set deadline</string>
+    <string name="editor_task_deadline_pick_dismiss">Cancel</string>
 
     <!-- Options -> Info -->
     <string name="options_info_logo_description">Study Planner Logo</string>
@@ -74,4 +131,11 @@
     <string name="form_curriculum_create_name_label">Curriculum name</string>
     <string name="form_curriculum_create_confirm_text">Create</string>
     <string name="form_curriculum_create_unknown_error">Could not create a curriculum</string>
+
+    <!-- Create link -->
+    <string name="form_link_create_title">Create link</string>
+    <string name="form_link_create_name_label">Link name</string>
+    <string name="form_link_create_url_label">URL</string>
+    <string name="form_link_create_confirm_text">Create</string>
+    <string name="form_link_create_unknown_error">Could not create a link</string>
 </resources>

@@ -49,7 +49,10 @@ fun NavRoot(navController: NavHostController) {
         }
 
         composable("diary/home") {
-            DiaryHomeScreen(navigateTo = NavigateToImpl(navController, "diary"))
+            DiaryHomeScreen(
+                navigateToDiscipline = { id -> navController.navigate("diary/disciplines/$id") },
+                navigateToTask = { disciplineId, taskId -> navController.navigate("diary/disciplines/$disciplineId/tasks/$taskId") },
+            )
         }
 
         composable(
@@ -60,6 +63,7 @@ fun NavRoot(navController: NavHostController) {
         ) { backStackEntry ->
             DisciplineScreen(
                 disciplineId = backStackEntry.arguments?.getLong("disciplineId")!!,
+                navigateToTask = { disciplineId, taskId -> navController.navigate("diary/disciplines/$disciplineId/tasks/$taskId") },
             )
         }
 
@@ -81,7 +85,9 @@ fun NavRoot(navController: NavHostController) {
         }
 
         composable("editor/curriculums/@current") {
-            CurriculumEditorScreen()
+            CurriculumEditorScreen(
+                navigateToDiscipline = { id -> navController.navigate("editor/disciplines/$id") },
+            )
         }
 
         composable(
@@ -92,6 +98,7 @@ fun NavRoot(navController: NavHostController) {
         ) { backStackEntry ->
             DisciplineEditorScreen(
                 disciplineId = backStackEntry.arguments?.getLong("disciplineId")!!,
+                navigateToTask = { disciplineId, taskId -> navController.navigate("editor/disciplines/$disciplineId/tasks/$taskId") }
             )
         }
 
@@ -99,6 +106,7 @@ fun NavRoot(navController: NavHostController) {
             "editor/disciplines/{disciplineId}/tasks/{taskId}",
             arguments = listOf(
                 navArgument("disciplineId") { type = NavType.LongType },
+                navArgument("taskId") { type = NavType.LongType },
             )
         ) { backStackEntry ->
             TaskEditorScreen(
