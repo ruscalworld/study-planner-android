@@ -83,6 +83,7 @@
     <!-- Diary -> Task -->
     <string name="diary_task_loading_title">Loading…</string>
     <string name="diary_task_loading_description">This could take a few seconds</string>
+    <string name="diary_task_unknown_error">Unable to load data</string>
 
     <string name="diary_task_status_title">Status</string>
     <string name="diary_task_status_not_started">Not started</string>

@@ -9,11 +9,13 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import ru.ruscalworld.studyplanner.core.model.Task
+import ru.ruscalworld.studyplanner.core.model.TaskProgress
 import ru.ruscalworld.studyplanner.core.repository.TaskRepository
 import ru.ruscalworld.studyplanner.provisioning.backend.PlannerClient
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.ListDTO
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.task.CreateTaskRequestDto
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.task.TaskDto
+import ru.ruscalworld.studyplanner.provisioning.backend.dto.task.TaskProgressDto
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.task.UpdateTaskRequestDto
 
 class PlannerTaskRepository(val client: PlannerClient) : TaskRepository {
@@ -65,5 +67,28 @@ class PlannerTaskRepository(val client: PlannerClient) : TaskRepository {
 
     override suspend fun deleteTask(disciplineId: Long, taskId: Long) {
         client.httpClient.delete("disciplines/$disciplineId/tasks/$taskId")
+    }
+
+    override suspend fun getTaskProgress(disciplineId: Long, taskId: Long): TaskProgress {
+        val progress: TaskProgressDto = client.httpClient.get(
+            "disciplines/$disciplineId/tasks/$taskId/progress"
+        ).body()
+
+        return progress.toInternalObject()
+    }
+
+    override suspend fun updateTaskProgress(
+        disciplineId: Long,
+        taskId: Long,
+        progress: TaskProgress,
+    ): TaskProgress {
+        val newProgress: TaskProgressDto = client.httpClient.put(
+            "disciplines/$disciplineId/tasks/$taskId/progress"
+        ) {
+            contentType(ContentType.Application.Json)
+            setBody(TaskProgressDto(progress))
+        }.body()
+
+        return newProgress.toInternalObject()
     }
 }

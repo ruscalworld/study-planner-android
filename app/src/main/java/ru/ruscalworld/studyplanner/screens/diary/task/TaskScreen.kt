@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -11,10 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.adapters.Link
-import ru.ruscalworld.studyplanner.common.LinkRow
 import ru.ruscalworld.studyplanner.common.CommonLayout
+import ru.ruscalworld.studyplanner.common.ExceptionHandler
+import ru.ruscalworld.studyplanner.common.LinkRow
 import ru.ruscalworld.studyplanner.common.LoadingScreen
-import ru.ruscalworld.studyplanner.core.model.Discipline
 import ru.ruscalworld.studyplanner.core.model.TaskProgress
 import ru.ruscalworld.studyplanner.ui.elements.common.Headline
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
@@ -27,45 +28,64 @@ fun TaskScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.load(disciplineId, taskId)
+    }
+
+    ExceptionHandler(
+        throwable = state.error,
+        unknownErrorMessage = R.string.diary_task_unknown_error,
+    )
+
     if (state.isLoading) {
         LoadingScreen(
             title = { stringResource(R.string.diary_task_loading_title) },
             description = { stringResource(R.string.diary_task_loading_description) },
         )
+
+        return
     }
 
     CommonLayout {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Headline(
-                title = { "Sample task name" },
-                description = { "External task name" },
-                highlight = true,
-            )
+            state.task?.let {
+                Headline(
+                    title = { it.name },
+                    description = it.externalName?.let{{ it }},
+                    highlight = true,
+                )
+            }
 
-            LinkRow {
-                Link(Discipline.Link(1, "Google", "https://google.com"))
-                Link(Discipline.Link(1, "Yandex", "https://yandex.ru"))
-                Link(Discipline.Link(1, "Rambler", "https://rambler.ru"))
+            state.links?.let {
+                if (it.isEmpty()) return@Column
+
+                LinkRow {
+                    for (link in it) {
+                        Link(link = link)
+                    }
+                }
             }
         }
 
-        Text(
-            "Также как разбавленное изрядной долей эмпатии, рациональное мышление прекрасно подходит для реализации поставленных обществом задач.\n" +
-                "\n" +
-                "Предварительные выводы неутешительны: понимание сути ресурсосберегающих технологий не оставляет шанса для модели развития.\n" +
-                "\n" +
-                "Предварительные выводы неутешительны: семантический разбор внешних противодействий создаёт предпосылки для направлений прогрессивного развития.",
-            style = AppTypography.bodyMedium,
-        )
+        state.task?.description?.let {
+            Text(it, style = AppTypography.bodyMedium)
+        }
 
-        TaskProgress(status = TaskProgress.Status.Completed, onChangeRequest = {})
+        state.progress?.let {
+            TaskProgressRow(status = it.status)
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            SuggestedTransitions(TaskProgress.Status.InProgress)
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                SuggestedTransitions(
+                    status = it.status,
+                    onChangeRequest = { status ->
+                        viewModel.updateProgress(disciplineId, taskId, TaskProgress(status))
+                    }
+                )
+            }
         }
     }
 }

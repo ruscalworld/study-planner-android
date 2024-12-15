@@ -25,9 +25,8 @@ import ru.ruscalworld.studyplanner.ui.theme.Red
 import ru.ruscalworld.studyplanner.ui.theme.Yellow
 
 @Composable
-fun TaskProgress(
+fun TaskProgressRow(
     status: TaskProgress.Status,
-    onChangeRequest: () -> Unit,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,

@@ -12,58 +12,61 @@ import ru.ruscalworld.studyplanner.ui.theme.PrimaryText
 @Composable
 fun SuggestedTransitions(
     status: TaskProgress.Status,
+    onChangeRequest: (TaskProgress.Status) -> Unit,
 ) {
     when (status) {
         TaskProgress.Status.NotStarted -> {
-            MarkAsInProgressButton(onClick = {})
-            MarkAsCompletedButton(onClick = {})
+            MarkAsInProgressButton(onChangeRequest)
+            MarkAsCompletedButton(onChangeRequest)
         }
 
         TaskProgress.Status.InProgress -> {
-            MarkAsNeedsProtectionButton(onClick = {})
-            MarkAsCompletedButton(onClick = {})
+            MarkAsNeedsProtectionButton(onChangeRequest)
+            MarkAsCompletedButton(onChangeRequest)
         }
 
         TaskProgress.Status.NeedsProtection -> {
-            MarkAsInProgressButton(onClick = {})
-            MarkAsCompletedButton(onClick = {})
+            MarkAsInProgressButton(onChangeRequest)
+            MarkAsCompletedButton(onChangeRequest)
         }
 
-        TaskProgress.Status.Completed -> {}
+        TaskProgress.Status.Completed -> {
+            MarkAsNotStartedButton(onChangeRequest)
+        }
     }
 }
 
 @Composable
-fun MarkAsNotStartedButton(onClick: () -> Unit) {
+fun MarkAsNotStartedButton(onChangeRequest: (TaskProgress.Status) -> Unit) {
     TransitionButton(
-        onClick = onClick,
+        onClick = { onChangeRequest(TaskProgress.Status.NotStarted) },
         icon = R.drawable.fa_xmark_solid,
         text = R.string.diary_task_transition_mark_as_not_started,
     )
 }
 
 @Composable
-fun MarkAsInProgressButton(onClick: () -> Unit) {
+fun MarkAsInProgressButton(onChangeRequest: (TaskProgress.Status) -> Unit) {
     TransitionButton(
-        onClick = onClick,
+        onClick = { onChangeRequest(TaskProgress.Status.InProgress) },
         icon = R.drawable.fa_hourglass_half_solid,
         text = R.string.diary_task_transition_mark_as_in_progress,
     )
 }
 
 @Composable
-fun MarkAsNeedsProtectionButton(onClick: () -> Unit) {
+fun MarkAsNeedsProtectionButton(onChangeRequest: (TaskProgress.Status) -> Unit) {
     TransitionButton(
-        onClick = onClick,
+        onClick = { onChangeRequest(TaskProgress.Status.NeedsProtection) },
         icon = R.drawable.fa_umbrella_solid,
         text = R.string.diary_task_transition_mark_as_needs_protection,
     )
 }
 
 @Composable
-fun MarkAsCompletedButton(onClick: () -> Unit) {
+fun MarkAsCompletedButton(onChangeRequest: (TaskProgress.Status) -> Unit) {
     TransitionButton(
-        onClick = onClick,
+        onClick = { onChangeRequest(TaskProgress.Status.Completed) },
         icon = R.drawable.fa_check_solid,
         text = R.string.diary_task_transition_mark_as_completed,
     )
