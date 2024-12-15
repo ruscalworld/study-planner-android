@@ -37,7 +37,6 @@ import ru.ruscalworld.studyplanner.common.ExceptionHandler
 import ru.ruscalworld.studyplanner.core.model.Curriculum
 import ru.ruscalworld.studyplanner.forms.curriculum.create.CreateCurriculumModal
 import ru.ruscalworld.studyplanner.ui.elements.button.Button
-import ru.ruscalworld.studyplanner.ui.elements.field.Field
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
 
 
@@ -121,7 +120,7 @@ fun ActionArea(
     onAddExistingRequest: (AddExistingCurriculumRequest) -> Unit,
 ) {
     var modalOpen by remember { mutableStateOf(false) }
-    var inviteCode by remember { mutableStateOf(TextFieldValue()) }
+    val inviteCode by remember { mutableStateOf(TextFieldValue()) }
 
     CreateCurriculumModal(
         modalOpen = modalOpen,
@@ -135,13 +134,6 @@ fun ActionArea(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Field(
-            modifier = Modifier.fillMaxWidth(),
-            label = { stringResource(R.string.start_curriculum_code_placeholder) },
-            value = inviteCode,
-            onValueChange = { inviteCode = it },
-        )
-
         if (inviteCode.text.isBlank()) {
             Button(
                 modifier = Modifier.fillMaxWidth(),
