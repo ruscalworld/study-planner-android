@@ -5,6 +5,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.authProvider
+import io.ktor.client.plugins.auth.providers.BearerAuthProvider
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -38,11 +40,17 @@ class PlannerClient(private val credentialsSupplier: CredentialsSupplier) : Auth
         install(Auth) {
             bearer {
                 loadTokens {
+                    if (tokens != null) {
+                        Log.d(TAG, "Reusing previously saved credentials")
+                        return@loadTokens tokens
+                    }
+
                     val credentials: Credentials? = credentialsSupplier.loadCredentials()
 
                     if (credentials != null) {
                         Log.i(TAG, "Loaded credentials")
-                        BearerTokens(credentials.accessToken, credentials.accessToken)
+                        tokens = BearerTokens(credentials.accessToken, credentials.accessToken)
+                        tokens
                     } else {
                         Log.i(TAG, "No stored credentials found")
                         null
@@ -78,9 +86,18 @@ class PlannerClient(private val credentialsSupplier: CredentialsSupplier) : Auth
 
         tokens = BearerTokens(response.accessToken, response.accessToken)
         credentialsSupplier.storeCredentials(response)
+
+        val authProvider = httpClient.authProvider<BearerAuthProvider>()
+
+        authProvider?.let {
+            it.clearToken()
+            Log.d(TAG, "Forced ktor to forget cached token")
+        }
     }
 
-    override fun isAuthenticated(): Boolean {
-        return tokens == null
+    override suspend fun signOut() {
+        tokens = null
+        val authProvider = httpClient.authProvider<BearerAuthProvider>()
+        authProvider?.clearToken()
     }
 }

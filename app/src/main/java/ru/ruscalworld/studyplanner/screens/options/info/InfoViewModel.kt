@@ -8,6 +8,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.ruscalworld.studyplanner.core.auth.AuthenticationManager
 import ru.ruscalworld.studyplanner.core.model.Curriculum
 import ru.ruscalworld.studyplanner.core.repository.CurriculumRepository
 import ru.ruscalworld.studyplanner.provisioning.backend.CredentialsSupplier
@@ -17,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InfoViewModel @Inject constructor(
+    private val authenticationManager: AuthenticationManager,
     private val curriculumRepository: CurriculumRepository,
     private val credentialsSupplier: CredentialsSupplier,
     private val activeCurriculumStore: ActiveCurriculumStore,
@@ -45,6 +47,7 @@ class InfoViewModel @Inject constructor(
 
     fun signOut() {
         viewModelScope.launch {
+            authenticationManager.signOut()
             credentialsSupplier.clearCredentials()
             uiState.update { it.copy(signedOut = true) }
         }

@@ -20,12 +20,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.core.auth.AuthenticationManager
+import ru.ruscalworld.studyplanner.provisioning.backend.CredentialsSupplier
 import ru.ruscalworld.studyplanner.settings.ActiveCurriculumStore
 import javax.inject.Inject
 
 @HiltViewModel
 class StartViewModel @Inject constructor(
     @ApplicationContext val appContext: Context,
+    private val credentialsSupplier: CredentialsSupplier,
     private val authenticationManager: AuthenticationManager,
     private val activeCurriculumStore: ActiveCurriculumStore,
 ): ViewModel() {
@@ -43,11 +45,12 @@ class StartViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val hasActiveCurriculum: Boolean = activeCurriculumStore.loadActiveCurriculum() != null
-                val isAuthenticated: Boolean = authenticationManager.isAuthenticated()
+                val isAuthenticated: Boolean = credentialsSupplier.loadCredentials() != null
 
                 Log.d(TAG, "Completed steps check completed (hasActiveCurriculum: $hasActiveCurriculum, isAuthenticated: $isAuthenticated)")
 
                 uiState.update { it.copy(
+                    isInitialLoading = isAuthenticated, // More smooth redirect
                     isCurriculumPicked = hasActiveCurriculum,
                     successfulAuth = isAuthenticated,
                 ) }

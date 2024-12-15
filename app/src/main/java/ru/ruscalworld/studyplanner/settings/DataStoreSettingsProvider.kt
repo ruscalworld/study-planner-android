@@ -21,7 +21,7 @@ class DataStoreSettingsProvider(private val context: Context) : CredentialsSuppl
         val flow = context.dataStore.data.map { preferences -> preferences[BEARER_TOKEN] }
 
         return flow.firstOrNull()?.let {
-            Credentials(it, "Bearer")
+            if (it.isNotEmpty()) Credentials(it, "Bearer") else null
         }
     }
 
