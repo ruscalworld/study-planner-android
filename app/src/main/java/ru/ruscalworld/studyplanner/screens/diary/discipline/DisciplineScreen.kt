@@ -3,6 +3,7 @@ package ru.ruscalworld.studyplanner.screens.diary.discipline
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -12,11 +13,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.adapters.Link
-import ru.ruscalworld.studyplanner.common.LinkRow
 import ru.ruscalworld.studyplanner.common.CommonLayout
+import ru.ruscalworld.studyplanner.common.ExceptionHandler
+import ru.ruscalworld.studyplanner.common.LinkRow
 import ru.ruscalworld.studyplanner.common.LoadingScreen
-import ru.ruscalworld.studyplanner.core.model.Discipline
-import ru.ruscalworld.studyplanner.core.model.Task
 import ru.ruscalworld.studyplanner.ui.elements.common.Headline
 
 @Composable
@@ -27,36 +27,57 @@ fun DisciplineScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
 
+    LaunchedEffect(disciplineId) {
+        viewModel.load(disciplineId)
+    }
+
+    ExceptionHandler(
+        throwable = state.error,
+        unknownErrorMessage = R.string.diary_discipline_unknown_error,
+    )
+
     if (state.isLoading) {
         LoadingScreen(
             title = { stringResource(R.string.diary_discipline_loading_title) },
             description = { stringResource(R.string.diary_discipline_loading_description) },
         )
+
+        return
     }
 
     CommonLayout {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Headline(title = { "Sample long discipline name".toUpperCase(Locale.current) }, highlight = true)
+            Headline(
+                title = { state.discipline?.name?.toUpperCase(Locale.current) ?: "" },
+                highlight = true
+            )
 
-            LinkRow {
-                Link(Discipline.Link(1, "Google", "https://google.com"))
-                Link(Discipline.Link(1, "Yandex", "https://yandex.ru"))
-                Link(Discipline.Link(1, "Rambler", "https://rambler.ru"))
+            state.links?.let {
+                if (it.isEmpty()) return@Column
+
+                LinkRow {
+                    for (link in it) {
+                        Link(link = link)
+                    }
+                }
             }
         }
 
-        TaskGroupContainer(
-            taskGroup = Task.Group(1, "Sample group"),
-            tasks = listOf(),
-            navigateToTask = { taskId -> navigateToTask(disciplineId, taskId) },
-        )
+        state.taskGroups?.let {
+            for (group in it) {
+                val tasks = state.tasks
+                val groupId = group.id
 
-        TaskGroupContainer(
-            taskGroup = Task.Group(1, "Sample another"),
-            tasks = listOf(),
-            navigateToTask = { taskId -> navigateToTask(disciplineId, taskId) },
-        )
+                if (tasks == null) continue
+
+                TaskGroupContainer(
+                    taskGroup = group,
+                    tasks = tasks[groupId] ?: listOf(),
+                    navigateToTask = { taskId -> navigateToTask(disciplineId, taskId) },
+                )
+            }
+        }
     }
 }
