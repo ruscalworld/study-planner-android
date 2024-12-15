@@ -3,7 +3,6 @@ package ru.ruscalworld.studyplanner.forms.link.create
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import ru.ruscalworld.studyplanner.core.model.Discipline
 import ru.ruscalworld.studyplanner.core.model.Task
 
 @Composable

@@ -10,11 +10,6 @@ import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.common.IconRow
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
 import ru.ruscalworld.studyplanner.ui.theme.PrimaryColor
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import java.util.Date
-import kotlin.math.ceil
 
 @Composable
 fun EstimatedTimeRow(
