@@ -36,6 +36,8 @@
 
     <!-- Task Cards -->
     <string name="common_task_card_deadline">%1$d %2$s (%3$s)</string>
+    <string name="common_task_card_deadline_today">today</string>
+    <string name="common_task_card_deadline_expired">%1$d %2$s ago</string>
     <string name="common_task_card_time_estimation">≈ %1$d %2$s</string>
 
     <!-- SCREENS -->

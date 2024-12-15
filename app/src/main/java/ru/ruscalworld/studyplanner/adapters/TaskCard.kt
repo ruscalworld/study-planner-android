@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ru.ruscalworld.studyplanner.R
-import ru.ruscalworld.studyplanner.core.model.Discipline
+import ru.ruscalworld.studyplanner.core.model.DisciplineTask
 import ru.ruscalworld.studyplanner.core.model.Task
 import ru.ruscalworld.studyplanner.ui.elements.card.Card
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
@@ -38,12 +38,11 @@ fun TaskCard(
 
 @Composable
 fun TaskCard(
-    task: Task,
-    discipline: Discipline,
+    task: DisciplineTask,
     navigateToTask: (Long, Long) -> Unit,
 ) {
     Card(
-        onClick = { navigateToTask(discipline.id, task.id) }
+        onClick = { navigateToTask(task.discipline.id, task.id) }
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -52,7 +51,7 @@ fun TaskCard(
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
-                    discipline.name,
+                    task.discipline.name,
                     style = AppTypography.displayMedium,
                 )
                 Text(

@@ -14,6 +14,7 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import kotlin.math.abs
 import kotlin.math.ceil
 
 @Composable
@@ -32,14 +33,30 @@ fun DeadlineRow(
         }
     ) {
         Text(
-            stringResource(
-                R.string.common_task_card_deadline,
-                deadlineDays,
-                LocalContext.current.resources.getQuantityString(R.plurals.time_days, deadlineDays),
-                DateTimeFormatter
-                    .ofLocalizedDateTime(FormatStyle.SHORT)
-                    .format(deadline.atZone(ZoneId.systemDefault()))
-            ),
+            when {
+                deadlineDays > 0 -> stringResource(
+                    R.string.common_task_card_deadline,
+                    deadlineDays,
+                    LocalContext.current.resources.getQuantityString(
+                        R.plurals.time_days,
+                        deadlineDays
+                    ),
+                    DateTimeFormatter
+                        .ofLocalizedDate(FormatStyle.MEDIUM)
+                        .format(deadline.atZone(ZoneId.systemDefault()))
+                )
+                deadlineDays == 0 -> stringResource(
+                    R.string.common_task_card_deadline_today,
+                )
+                else -> stringResource(
+                    R.string.common_task_card_deadline_expired,
+                    abs(deadlineDays),
+                    LocalContext.current.resources.getQuantityString(
+                        R.plurals.time_days,
+                        abs(deadlineDays)
+                    ),
+                )
+            },
             style = AppTypography.bodyMedium,
         )
     }

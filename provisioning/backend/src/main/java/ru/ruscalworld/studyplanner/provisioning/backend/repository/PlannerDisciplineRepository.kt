@@ -9,9 +9,11 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import ru.ruscalworld.studyplanner.core.model.Discipline
+import ru.ruscalworld.studyplanner.core.model.GenericStats
 import ru.ruscalworld.studyplanner.core.repository.DisciplineRepository
 import ru.ruscalworld.studyplanner.provisioning.backend.PlannerClient
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.ListDTO
+import ru.ruscalworld.studyplanner.provisioning.backend.dto.common.GenericStatsDto
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.discipline.CreateDisciplineRequestDto
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.discipline.DisciplineDto
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.discipline.UpdateDisciplineRequestDto
@@ -64,5 +66,13 @@ class PlannerDisciplineRepository(private val client: PlannerClient) : Disciplin
 
     override suspend fun deleteDiscipline(curriculumId: Long, id: Long) {
         client.httpClient.delete("curriculums/$curriculumId/disciplines/$id")
+    }
+
+    override suspend fun getState(id: Long): GenericStats {
+        val stats: GenericStatsDto = client.httpClient.get(
+            "disciplines/$id/stats"
+        ).body()
+
+        return stats.toInternalObject()
     }
 }

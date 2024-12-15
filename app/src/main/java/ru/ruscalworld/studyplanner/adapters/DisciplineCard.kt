@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import ru.ruscalworld.studyplanner.R
-import ru.ruscalworld.studyplanner.core.model.CompletionProgress
 import ru.ruscalworld.studyplanner.core.model.Discipline
+import ru.ruscalworld.studyplanner.core.model.GenericStats
 import ru.ruscalworld.studyplanner.ui.elements.card.Card
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
 import ru.ruscalworld.studyplanner.ui.theme.PrimaryColor
@@ -31,7 +31,7 @@ import ru.ruscalworld.studyplanner.ui.theme.PrimaryColor
 fun DisciplineCard(
     discipline: Discipline,
     navigateTo: (Long) -> Unit,
-    progress: CompletionProgress<CompletionProgress.DisciplineScope>? = null,
+    progress: GenericStats? = null,
 ) {
     Card(
         onClick = { navigateTo(discipline.id) }
@@ -55,10 +55,10 @@ fun DisciplineCard(
                     Text(
                         stringResource(
                             R.string.common_discipline_card_tasks_total,
-                            it.tasksTotal,
+                            it.totalTasks,
                             LocalContext.current.resources.getQuantityString(
                                 R.plurals.common_discipline_card_tasks_total,
-                                it.tasksTotal,
+                                it.totalTasks,
                             ),
                         ),
 

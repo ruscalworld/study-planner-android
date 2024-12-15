@@ -9,12 +9,14 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import ru.ruscalworld.studyplanner.core.model.Curriculum
+import ru.ruscalworld.studyplanner.core.model.DisciplineTask
 import ru.ruscalworld.studyplanner.core.repository.CurriculumRepository
 import ru.ruscalworld.studyplanner.provisioning.backend.PlannerClient
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.ListDTO
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.curriculum.CreateCurriculumRequestDto
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.curriculum.CurriculumDto
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.curriculum.UpdateCurriculumRequestDto
+import ru.ruscalworld.studyplanner.provisioning.backend.dto.task.DisciplineTaskDto
 
 class PlannerCurriculumRepository(private val client: PlannerClient) : CurriculumRepository {
     override suspend fun getDisciplines(): List<Curriculum> {
@@ -47,5 +49,13 @@ class PlannerCurriculumRepository(private val client: PlannerClient) : Curriculu
 
     override suspend fun deleteCurriculum(id: Long) {
         client.httpClient.delete("curriculums/$id")
+    }
+
+    override suspend fun getUpcomingTasks(id: Long): List<DisciplineTask> {
+        val tasks: List<DisciplineTaskDto> = client.httpClient.get(
+            "curriculums/$id/tasks"
+        ).body()
+
+        return ListDTO(tasks).toInternalObject()
     }
 }
