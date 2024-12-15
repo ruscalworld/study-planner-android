@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.safeGesturesPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,9 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
 import ru.ruscalworld.studyplanner.R
@@ -58,15 +54,6 @@ fun BottomNavigation(navController: NavHostController) {
                         painter = painterResource(R.drawable.fa_book_solid),
                         contentDescription = stringResource(R.string.navigation_section_diary),
                         tint = navSectionColor(currentDestination, "diary"),
-                        modifier = Modifier.size(24.dp),
-                    )
-                }
-
-                IconButton(onClick = { navController.navigate("stats/home", navOptions) }) {
-                    Icon(
-                        painter = painterResource(R.drawable.fa_chart_simple_solid),
-                        contentDescription = stringResource(R.string.navigation_section_stats),
-                        tint = navSectionColor(currentDestination, "stats"),
                         modifier = Modifier.size(24.dp),
                     )
                 }

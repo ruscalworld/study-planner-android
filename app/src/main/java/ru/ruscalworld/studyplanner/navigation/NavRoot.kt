@@ -13,7 +13,6 @@ import ru.ruscalworld.studyplanner.screens.editor.curriculum.CurriculumEditorScr
 import ru.ruscalworld.studyplanner.screens.editor.discipline.DisciplineEditorScreen
 import ru.ruscalworld.studyplanner.screens.editor.task.TaskEditorScreen
 import ru.ruscalworld.studyplanner.screens.options.info.InfoScreen
-import ru.ruscalworld.studyplanner.screens.stats.home.StatsHomeScreen
 import ru.ruscalworld.studyplanner.screens.welcome.curriculum.PickCurriculumScreen
 import ru.ruscalworld.studyplanner.screens.welcome.start.StartScreen
 
@@ -88,10 +87,6 @@ fun NavRoot(navController: NavHostController) {
                 disciplineId = backStackEntry.arguments?.getLong("disciplineId")!!,
                 taskId = backStackEntry.arguments?.getLong("taskId")!!,
             )
-        }
-
-        composable("stats/home") {
-            StatsHomeScreen()
         }
 
         composable("editor/curriculums/@current") {
