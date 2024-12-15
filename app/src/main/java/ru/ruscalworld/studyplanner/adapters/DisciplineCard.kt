@@ -55,9 +55,9 @@ fun DisciplineCard(
                     Text(
                         stringResource(
                             R.string.common_discipline_card_tasks_total,
-                            it.totalTasks,
                             LocalContext.current.resources.getQuantityString(
                                 R.plurals.common_discipline_card_tasks_total,
+                                it.totalTasks,
                                 it.totalTasks,
                             ),
                         ),

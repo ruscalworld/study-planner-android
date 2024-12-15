@@ -27,8 +27,7 @@ fun EstimatedTimeRow(
         Text(
             stringResource(
                 R.string.common_task_card_time_estimation,
-                hours,
-                LocalContext.current.resources.getQuantityString(R.plurals.time_hours, hours),
+                LocalContext.current.resources.getQuantityString(R.plurals.time_hours, hours, hours),
             ),
             style = AppTypography.bodyMedium,
         )

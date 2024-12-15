@@ -1,0 +1,197 @@
+<resources>
+    <!-- GENERAL -->
+    <!-- App -->
+    <string name="app_name">Study Planner</string>
+
+    <!-- Time -->
+    <plurals name="time_days">
+        <item quantity="one">%1$d день</item>
+        <item quantity="few">%1$d дня</item>
+        <item quantity="many">%1$d дней</item>
+        <item quantity="other">%1$d дней</item>
+    </plurals>
+
+    <plurals name="time_hours">
+        <item quantity="one">%1$d час</item>
+        <item quantity="few">%1$d часа</item>
+        <item quantity="many">%1$d часов</item>
+        <item quantity="other">%1$d часов</item>
+    </plurals>
+
+    <!-- Quotes -->
+    <string name="quoted_string">«%1$s»</string>
+
+    <!-- NAVIGATION -->
+    <string name="navigation_section_diary">Дневник</string>
+    <string name="navigation_section_stats">Статистика</string>
+    <string name="navigation_section_editor">Редактор</string>
+    <string name="navigation_section_options">Настройки</string>
+
+    <!-- COMMON COMPONENTS -->
+    <!-- Curriculum Cards -->
+    <string name="common_curriculum_card_semester">%1$d семестр</string>
+
+    <!-- Discipline Cards -->
+    <string name="common_discipline_card_tasks_total">%1$s</string>
+    <plurals name="common_discipline_card_tasks_total">
+        <item quantity="one">%1$d задание</item>
+        <item quantity="few">%1$d задания</item>
+        <item quantity="many">%1$d заданий</item>
+        <item quantity="other">%1$d заданий</item>
+    </plurals>
+
+    <!-- Task Cards -->
+    <string name="common_task_card_deadline">%1$s (%2$s)</string>
+    <string name="common_task_card_deadline_today">сегодня</string>
+    <string name="common_task_card_deadline_expired">%1$s назад</string>
+    <string name="common_task_card_time_estimation">≈ %1$s</string>
+
+    <!-- SCREENS -->
+    <!-- Start -> Auth -->
+    <string name="auth_error_failed">Ошибка аутентификации</string>
+    <string name="auth_error_invalid_credential">Некорректный тип данных авторизации</string>
+    <string name="auth_error_no_credential">Нет доступных способов аутентификации</string>
+    <string name="auth_error_unknown">Ошибка аутентификации на сервере. Попробуйте позже.</string>
+
+    <string name="start_welcome_loading_title">Секундочку…</string>
+    <string name="start_welcome_loading_description">Подготавливаем приложение</string>
+    <string name="start_welcome_title">Добро пожаловать!</string>
+    <string name="start_welcome_text">Чтобы использовать приложение, нужно авторизоваться.</string>
+    <string name="start_welcome_authenticate">Войти</string>
+
+    <!-- Start -> Curriculum -->
+    <string name="start_curriculum_title">Создай учебный план</string>
+    <string name="start_curriculum_text">
+        В учебном плане есть данные о твоих предметах и заданиях. Выбери название для плана и
+        переходи к заполнению.
+    </string>
+    <string name="start_curriculum_code_placeholder">Код приглашения</string>
+    <string name="start_curriculum_create_new">Создать учебный план</string>
+    <string name="start_curriculum_add_existing">Добавить учебный план</string>
+    <string name="start_curriculum_add_existing_unknown_error">Не удалось добавить учебный план</string>
+
+    <!-- Diary -> Home -->
+    <string name="diary_home_loading_title">Один момент…</string>
+    <string name="diary_home_loading_description">Загружаем твои задания</string>
+    <string name="diary_home_unknown_error">Не удалось загрузить данные</string>
+    <string name="diary_home_error_no_curriculum">Учебный план не выбран</string>
+
+    <string name="diary_home_prioritized_tasks_title">Нужно сделать</string>
+    <string name="diary_home_prioritized_tasks_description">Скоро дедлайн</string>
+    <string name="diary_home_disciplines_title">Дисциплины</string>
+    <string name="diary_home_disciplines_description">Все задания</string>
+
+    <!-- Diary -> Discipline -->
+    <string name="diary_discipline_loading_title">Секундочку…</string>
+    <string name="diary_discipline_loading_description">Загружаем информацию о дисциплине</string>
+    <string name="diary_discipline_unknown_error">Не удалось загрузить данные</string>
+
+    <!-- Diary -> Task -->
+    <string name="diary_task_loading_title">Момент…</string>
+    <string name="diary_task_loading_description">Загружаем задание</string>
+    <string name="diary_task_unknown_error">Не удалось загрузить данные</string>
+
+    <string name="diary_task_status_title">Статус</string>
+    <string name="diary_task_status_not_started">Не начато</string>
+    <string name="diary_task_status_in_progress">В процессе</string>
+    <string name="diary_task_status_needs_protection">Готово к защите</string>
+    <string name="diary_task_status_completed">Выполнено</string>
+    <string name="diary_task_status_edit_button">Изменить статус</string>
+
+    <string name="diary_task_transition_mark_as_in_progress">Пометить как «В процессе»</string>
+    <string name="diary_task_transition_mark_as_completed">Пометить как выполненное</string>
+    <string name="diary_task_transition_mark_as_not_started">Пометить как неначатое</string>
+    <string name="diary_task_transition_mark_as_needs_protection">Пометить как «Готово к защите»</string>
+
+    <!-- Stats -> Home -->
+    <string name="stats_home_loading_title">Загрузка…</string>
+    <string name="stats_home_loading_description">Считаем статистику</string>
+
+    <!-- Editor -> Curriculum -->
+    <string name="editor_curriculum_loading_title">Загрузка…</string>
+    <string name="editor_curriculum_loading_description">Подготавливаем редактор</string>
+    <string name="editor_curriculum_error_no_curriculum">Не удалось загрузить данные</string>
+
+    <string name="editor_curriculum_title">Учебный план</string>
+    <string name="editor_curriculum_name_label">Название</string>
+    <string name="editor_curriculum_semester_no_label">Семестр</string>
+
+    <string name="editor_curriculum_disciplines_title">Дисциплины</string>
+    <string name="editor_curriculum_disciplines_create">Добавить дисциплину</string>
+
+    <!-- Editor -> Discipline -->
+    <string name="editor_discipline_loading_title">Секундочку…</string>
+    <string name="editor_discipline_loading_description">Загружаем данные о дисциплине</string>
+    <string name="editor_discipline_unknown_error">Не удалось загрузить данные о дисциплине</string>
+    <string name="editor_discipline_error_no_discipline">Дисциплина не выбрана</string>
+
+    <string name="editor_discipline_title">Дисциплина</string>
+    <string name="editor_discipline_name_label">Название</string>
+    <string name="editor_discipline_task_no_description">Нет описания</string>
+    <string name="editor_discipline_tasks_groups_create">Добавить группу</string>
+    <string name="editor_discipline_tasks_create">Добавить задание</string>
+
+    <!-- Editor -> Task -->
+    <string name="editor_task_loading_title">Один момент…</string>
+    <string name="editor_task_loading_description">Загружаем данные о задании</string>
+    <string name="editor_task_unknown_error">Не удалось загрузить данные о задании</string>
+    <string name="editor_task_error_no_task">Задание не выбрано</string>
+
+    <string name="editor_task_title">Задание</string>
+    <string name="editor_task_name_label">Название</string>
+    <string name="editor_task_external_name_label">Краткое описание</string>
+    <string name="editor_task_description_label">Описание</string>
+    <string name="editor_task_difficulty_label">Сложность (в часах)</string>
+    <string name="editor_task_deadline_label">Срок сдачи</string>
+    <string name="editor_task_deadline_pick_confirm">Установить срок</string>
+    <string name="editor_task_deadline_pick_dismiss">Отмена</string>
+
+    <!-- Options -> Info -->
+    <string name="options_info_loading_title">Секунду…</string>
+    <string name="options_info_loading_description">Загружаем твои учебные планы</string>
+    <string name="options_info_unknown_error">Не удалось загрузить данные</string>
+
+    <string name="options_info_logo_description">Логотип Study Planner</string>
+    <string name="options_info_app_name">Study Planner</string>
+    <string name="options_info_app_description">Планировщик для студентов</string>
+    <string name="options_info_curriculums_title">Учебные планы</string>
+    <string name="options_info_curriculums_add">Добавить учебный план</string>
+    <string name="options_info_other_title">Другое</string>
+    <string name="options_info_other_sign_out">Выйти</string>
+
+    <!-- FORMS -->
+    <!-- Create curriculum -->
+    <string name="form_curriculum_create_title">Создать учебный план</string>
+    <string name="form_curriculum_create_name_label">Название учебного плана</string>
+    <string name="form_curriculum_create_confirm_text">Создать</string>
+    <string name="form_curriculum_create_unknown_error">Не удалось создать учебный план</string>
+
+    <!-- Create discipline -->
+    <string name="form_discipline_create_title">Создать дисциплину</string>
+    <string name="form_discipline_create_name_label">Название дисциплины</string>
+    <string name="form_discipline_create_confirm_text">Создать</string>
+    <string name="form_discipline_create_unknown_error">Не удалось создать дисциплину</string>
+
+    <!-- Create task group -->
+    <string name="form_task_group_create_title">Создать группу</string>
+    <string name="form_task_group_create_name_label">Название группы</string>
+    <string name="form_task_group_create_confirm_text">Создать</string>
+    <string name="form_task_group_create_unknown_error">Не удалось создать группу</string>
+
+    <!-- Create task -->
+    <string name="form_task_create_title">Создать задание</string>
+    <string name="form_task_create_title_label">Название задания</string>
+    <string name="form_task_create_external_name_label">Краткое описание</string>
+    <string name="form_task_create_confirm_text">Создать</string>
+    <string name="form_task_create_unknown_error">Не удалось создать задание</string>
+
+    <!-- Create link -->
+    <string name="form_link_create_title">Создать ссылку</string>
+    <string name="form_link_create_name_label">Название ссылки</string>
+    <string name="form_link_create_url_label">URL</string>
+    <string name="form_link_create_confirm_text">Создать</string>
+
+    <string name="form_link_create_error_empty_name">Пожалуйста, укажите название</string>
+    <string name="form_link_create_error_invalid_url">Пожалуйста, укажите корректный URL</string>
+    <string name="form_link_create_unknown_error">Не удалось создать ссылку</string>
+</resources>

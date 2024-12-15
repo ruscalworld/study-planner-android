@@ -36,10 +36,10 @@ fun DeadlineRow(
             when {
                 deadlineDays > 0 -> stringResource(
                     R.string.common_task_card_deadline,
-                    deadlineDays,
                     LocalContext.current.resources.getQuantityString(
                         R.plurals.time_days,
-                        deadlineDays
+                        deadlineDays,
+                        deadlineDays,
                     ),
                     DateTimeFormatter
                         .ofLocalizedDate(FormatStyle.MEDIUM)
@@ -50,10 +50,10 @@ fun DeadlineRow(
                 )
                 else -> stringResource(
                     R.string.common_task_card_deadline_expired,
-                    abs(deadlineDays),
                     LocalContext.current.resources.getQuantityString(
                         R.plurals.time_days,
-                        abs(deadlineDays)
+                        abs(deadlineDays),
+                        abs(deadlineDays),
                     ),
                 )
             },
