@@ -53,6 +53,7 @@ fun Field(
         keyboardOptions = keyboardOptions,
         maxLines = lines,
         minLines = lines,
+        singleLine = lines == 1,
         decorationBox = @Composable { innerTextField ->
             OutlinedTextFieldDefaults.DecorationBox(
                 value = value.text,
