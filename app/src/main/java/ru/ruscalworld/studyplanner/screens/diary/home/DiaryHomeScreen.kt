@@ -11,6 +11,7 @@ import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.common.CommonLayout
 import ru.ruscalworld.studyplanner.common.ExceptionHandler
 import ru.ruscalworld.studyplanner.common.LoadingScreen
+import ru.ruscalworld.studyplanner.common.LoadingVisibility
 
 @Composable
 fun DiaryHomeScreen(
@@ -35,17 +36,17 @@ fun DiaryHomeScreen(
             title = { stringResource(R.string.diary_home_loading_title) },
             description = { stringResource(R.string.diary_home_loading_description) },
         )
-
-        return
     }
 
-    CommonLayout(scaffoldPadding = scaffoldPadding) {
-        state.prioritizedTasks?.let {
-            PrioritizedTasksBlock(it, navigateToTask)
-        }
+    LoadingVisibility(isLoading = state.isLoading) {
+        CommonLayout(scaffoldPadding = scaffoldPadding) {
+            state.prioritizedTasks?.let {
+                PrioritizedTasksBlock(it, navigateToTask)
+            }
 
-        state.disciplines?.let {
-            DisciplinesBlock(it, navigateToDiscipline)
+            state.disciplines?.let {
+                DisciplinesBlock(it, navigateToDiscipline)
+            }
         }
     }
 }

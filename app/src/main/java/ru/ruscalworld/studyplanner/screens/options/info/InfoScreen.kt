@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.common.ExceptionHandler
 import ru.ruscalworld.studyplanner.common.LoadingScreen
+import ru.ruscalworld.studyplanner.common.LoadingVisibility
 
 @Composable
 fun InfoScreen(
@@ -50,17 +51,17 @@ fun InfoScreen(
             title = { stringResource(R.string.diary_home_loading_title) },
             description = { stringResource(R.string.diary_home_loading_description) },
         )
-
-        return
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState()),
-    ) {
-        Header()
-        Options(navigateToPickCurriculum = navigateToPickCurriculum)
-        Box(modifier = Modifier.padding(scaffoldPadding))
+    LoadingVisibility(isLoading = state.isLoading) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            Header()
+            Options(navigateToPickCurriculum = navigateToPickCurriculum)
+            Box(modifier = Modifier.padding(scaffoldPadding))
+        }
     }
 }
