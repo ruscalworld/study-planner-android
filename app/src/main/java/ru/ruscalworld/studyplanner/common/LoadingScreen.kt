@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.safeGesturesPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,7 +38,8 @@ fun Contents(title: @Composable () -> String, description: @Composable () -> Str
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(64.dp)
+        verticalArrangement = Arrangement.spacedBy(64.dp),
+        modifier = Modifier.safeGesturesPadding(),
     ) {
         LottieAnimation(composition, modifier = Modifier.height(128.dp), iterations = 3)
 
