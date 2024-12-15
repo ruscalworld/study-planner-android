@@ -1,5 +1,6 @@
 package ru.ruscalworld.studyplanner.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -17,7 +18,10 @@ import ru.ruscalworld.studyplanner.screens.welcome.curriculum.PickCurriculumScre
 import ru.ruscalworld.studyplanner.screens.welcome.start.StartScreen
 
 @Composable
-fun NavRoot(navController: NavHostController) {
+fun NavRoot(
+    navController: NavHostController,
+    scaffoldPadding: PaddingValues,
+) {
     NavHost(navController, startDestination = "welcome/start") {
         composable("welcome/start") {
             StartScreen(
@@ -61,6 +65,7 @@ fun NavRoot(navController: NavHostController) {
             DiaryHomeScreen(
                 navigateToDiscipline = { id -> navController.navigate("diary/disciplines/$id") },
                 navigateToTask = { disciplineId, taskId -> navController.navigate("diary/disciplines/$disciplineId/tasks/$taskId") },
+                scaffoldPadding = scaffoldPadding,
             )
         }
 
@@ -73,6 +78,7 @@ fun NavRoot(navController: NavHostController) {
             DisciplineScreen(
                 disciplineId = backStackEntry.arguments?.getLong("disciplineId")!!,
                 navigateToTask = { disciplineId, taskId -> navController.navigate("diary/disciplines/$disciplineId/tasks/$taskId") },
+                scaffoldPadding = scaffoldPadding,
             )
         }
 
@@ -86,12 +92,14 @@ fun NavRoot(navController: NavHostController) {
             TaskScreen(
                 disciplineId = backStackEntry.arguments?.getLong("disciplineId")!!,
                 taskId = backStackEntry.arguments?.getLong("taskId")!!,
+                scaffoldPadding = scaffoldPadding,
             )
         }
 
         composable("editor/curriculums/@current") {
             CurriculumEditorScreen(
                 navigateToDiscipline = { id -> navController.navigate("editor/disciplines/$id") },
+                scaffoldPadding = scaffoldPadding,
             )
         }
 
@@ -103,7 +111,8 @@ fun NavRoot(navController: NavHostController) {
         ) { backStackEntry ->
             DisciplineEditorScreen(
                 disciplineId = backStackEntry.arguments?.getLong("disciplineId")!!,
-                navigateToTask = { disciplineId, taskId -> navController.navigate("editor/disciplines/$disciplineId/tasks/$taskId") }
+                navigateToTask = { disciplineId, taskId -> navController.navigate("editor/disciplines/$disciplineId/tasks/$taskId") },
+                scaffoldPadding = scaffoldPadding,
             )
         }
 
@@ -117,6 +126,7 @@ fun NavRoot(navController: NavHostController) {
             TaskEditorScreen(
                 disciplineId = backStackEntry.arguments?.getLong("disciplineId")!!,
                 taskId = backStackEntry.arguments?.getLong("taskId")!!,
+                scaffoldPadding = scaffoldPadding,
             )
         }
 
@@ -151,6 +161,8 @@ fun NavRoot(navController: NavHostController) {
                         launchSingleTop = true
                     }
                 },
+
+                scaffoldPadding = scaffoldPadding,
             )
         }
     }

@@ -1,5 +1,6 @@
 package ru.ruscalworld.studyplanner.screens.diary.home
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,6 +17,7 @@ fun DiaryHomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToDiscipline: (Long) -> Unit,
     navigateToTask: (Long, Long) -> Unit,
+    scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -37,7 +39,7 @@ fun DiaryHomeScreen(
         return
     }
 
-    CommonLayout {
+    CommonLayout(scaffoldPadding = scaffoldPadding) {
         state.prioritizedTasks?.let {
             PrioritizedTasksBlock(it, navigateToTask)
         }

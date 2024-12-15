@@ -1,5 +1,6 @@
 package ru.ruscalworld.studyplanner.screens.editor.task
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -34,6 +35,7 @@ fun TaskEditorScreen(
     viewModel: TaskEditorViewModel = hiltViewModel(),
     disciplineId: Long,
     taskId: Long,
+    scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -65,7 +67,7 @@ fun TaskEditorScreen(
         return
     }
 
-    CommonLayout {
+    CommonLayout(scaffoldPadding = scaffoldPadding) {
         Headline(
             title = { stringResource(R.string.editor_task_title).toUpperCase(Locale.current) },
             highlight = true,

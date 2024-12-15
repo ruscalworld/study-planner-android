@@ -2,6 +2,7 @@ package ru.ruscalworld.studyplanner.screens.diary.discipline
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -24,6 +25,7 @@ fun DisciplineScreen(
     viewModel: DisciplineViewModel = hiltViewModel(),
     disciplineId: Long,
     navigateToTask: (Long, Long) -> Unit,
+    scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -45,7 +47,7 @@ fun DisciplineScreen(
         return
     }
 
-    CommonLayout {
+    CommonLayout(scaffoldPadding = scaffoldPadding) {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {

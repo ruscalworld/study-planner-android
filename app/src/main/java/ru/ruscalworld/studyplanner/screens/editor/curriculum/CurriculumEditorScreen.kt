@@ -1,5 +1,6 @@
 package ru.ruscalworld.studyplanner.screens.editor.curriculum
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -37,6 +38,7 @@ import ru.ruscalworld.studyplanner.ui.theme.PrimaryText
 fun CurriculumEditorScreen(
     viewModel: CurriculumEditorViewModel = hiltViewModel(),
     navigateToDiscipline: (Long) -> Unit,
+    scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
     val name by viewModel.name.collectAsState()
@@ -63,7 +65,7 @@ fun CurriculumEditorScreen(
         return
     }
 
-    CommonLayout {
+    CommonLayout(scaffoldPadding = scaffoldPadding) {
         Headline(
             title = { stringResource(R.string.editor_curriculum_title).toUpperCase(Locale.current) },
             highlight = true,

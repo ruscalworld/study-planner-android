@@ -1,7 +1,10 @@
 package ru.ruscalworld.studyplanner.screens.options.info
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -21,6 +24,7 @@ fun InfoScreen(
     navigateToStart: () -> Unit,
     navigateToPickCurriculum: () -> Unit,
     navigateToHome: () -> Unit,
+    scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -56,8 +60,7 @@ fun InfoScreen(
             .verticalScroll(rememberScrollState()),
     ) {
         Header()
-        Options(
-            navigateToPickCurriculum = navigateToPickCurriculum,
-        )
+        Options(navigateToPickCurriculum = navigateToPickCurriculum)
+        Box(modifier = Modifier.padding(scaffoldPadding))
     }
 }

@@ -2,6 +2,7 @@ package ru.ruscalworld.studyplanner.screens.diary.task
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,6 +26,7 @@ fun TaskScreen(
     viewModel: TaskViewModel = hiltViewModel(),
     disciplineId: Long,
     taskId: Long,
+    scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -46,7 +48,7 @@ fun TaskScreen(
         return
     }
 
-    CommonLayout {
+    CommonLayout(scaffoldPadding = scaffoldPadding) {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {

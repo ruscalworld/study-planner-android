@@ -1,5 +1,6 @@
 package ru.ruscalworld.studyplanner.screens.editor.discipline
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarHost
@@ -37,6 +38,7 @@ fun DisciplineEditorScreen(
     viewModel: DisciplineEditorViewModel = hiltViewModel(),
     disciplineId: Long,
     navigateToTask: (Long, Long) -> Unit,
+    scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
     val name by viewModel.name.collectAsState()
@@ -63,7 +65,7 @@ fun DisciplineEditorScreen(
         return
     }
 
-    CommonLayout {
+    CommonLayout(scaffoldPadding = scaffoldPadding) {
         Headline(
             title = { stringResource(R.string.editor_discipline_title).toUpperCase(Locale.current) },
             highlight = true,
