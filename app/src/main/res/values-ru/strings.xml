@@ -98,10 +98,10 @@
     <string name="diary_task_status_completed">Выполнено</string>
     <string name="diary_task_status_edit_button">Изменить статус</string>
 
-    <string name="diary_task_transition_mark_as_in_progress">Пометить как «В процессе»</string>
-    <string name="diary_task_transition_mark_as_completed">Пометить как выполненное</string>
-    <string name="diary_task_transition_mark_as_not_started">Пометить как неначатое</string>
-    <string name="diary_task_transition_mark_as_needs_protection">Пометить как «Готово к защите»</string>
+    <string name="diary_task_transition_mark_as_in_progress">В процессе</string>
+    <string name="diary_task_transition_mark_as_completed">Выполнено</string>
+    <string name="diary_task_transition_mark_as_not_started">Не начато</string>
+    <string name="diary_task_transition_mark_as_needs_protection">Готово к защите</string>
 
     <!-- Stats -> Home -->
     <string name="stats_home_loading_title">Загрузка…</string>
@@ -117,7 +117,7 @@
     <string name="editor_curriculum_semester_no_label">Семестр</string>
 
     <string name="editor_curriculum_disciplines_title">Дисциплины</string>
-    <string name="editor_curriculum_disciplines_create">Добавить дисциплину</string>
+    <string name="editor_curriculum_disciplines_create">Добавить</string>
 
     <!-- Editor -> Discipline -->
     <string name="editor_discipline_loading_title">Секундочку…</string>
