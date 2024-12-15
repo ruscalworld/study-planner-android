@@ -16,7 +16,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.core.model.Curriculum
+import ru.ruscalworld.studyplanner.core.model.Discipline
 import ru.ruscalworld.studyplanner.core.repository.CurriculumRepository
+import ru.ruscalworld.studyplanner.core.repository.DisciplineRepository
+import ru.ruscalworld.studyplanner.screens.editor.discipline.DisciplineEditorViewModel
 import ru.ruscalworld.studyplanner.settings.ActiveCurriculumStore
 import ru.ruscalworld.studyplanner.ui.exceptions.VisibleException
 import javax.inject.Inject
@@ -25,6 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CurriculumEditorViewModel @Inject constructor(
     private val curriculumRepository: CurriculumRepository,
+    private val disciplineRepository: DisciplineRepository,
     private val activeCurriculumStore: ActiveCurriculumStore,
 ) : ViewModel() {
     companion object {
@@ -54,6 +58,8 @@ class CurriculumEditorViewModel @Inject constructor(
                     ?: throw VisibleException(R.string.editor_curriculum_error_no_curriculum)
 
                 val curriculumFetcher = async { curriculumRepository.getCurriculum(curriculumId) }
+                val disciplinesFetcher = async { disciplineRepository.getDisciplines(curriculumId) }
+
                 val curriculum = curriculumFetcher.await()
 
                 name.value = TextFieldValue(curriculum.name)
@@ -62,6 +68,7 @@ class CurriculumEditorViewModel @Inject constructor(
                 uiState.value = CurriculumEditorState(
                     isLoading = false,
                     curriculum = curriculum,
+                    disciplines = disciplinesFetcher.await(),
                 )
             } catch (e: Exception) {
                 Log.e(TAG, "Data fetching failed", e)
@@ -76,14 +83,19 @@ class CurriculumEditorViewModel @Inject constructor(
             Log.d(TAG, "updateCurriculum: ${curriculum?.id}, \"${name.value.text}\", ${semesterNo.value.text}")
             if (curriculum == null || !semesterNo.value.text.isDigitsOnly()) return@launch
 
-            curriculumRepository.updateCurriculum(
-                curriculum.id,
+            try {
+                curriculumRepository.updateCurriculum(
+                    curriculum.id,
 
-                Curriculum.UpdateRequest(
-                    name.value.text,
-                    semesterNo.value.text.toInt(),
+                    Curriculum.UpdateRequest(
+                        name.value.text,
+                        semesterNo.value.text.toInt(),
+                    )
                 )
-            )
+            } catch (e: Exception) {
+                Log.e(DisciplineEditorViewModel.TAG, "Data update failed", e)
+                uiState.update { it.copy(error = e) }
+            }
         }
     }
 
@@ -94,5 +106,9 @@ class CurriculumEditorViewModel @Inject constructor(
     fun onSemesterNoChanged(value: TextFieldValue) {
         if (!value.text.isDigitsOnly()) return
         semesterNo.value = value
+    }
+
+    fun onDisciplineAdded(discipline: Discipline) {
+        uiState.update { it.copy(disciplines = it.disciplines?.plus(discipline)) }
     }
 }

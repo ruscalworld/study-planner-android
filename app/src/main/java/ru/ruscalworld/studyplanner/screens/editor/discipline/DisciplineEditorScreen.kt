@@ -1,6 +1,8 @@
 package ru.ruscalworld.studyplanner.screens.editor.discipline
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.toUpperCase
@@ -17,16 +20,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.adapters.Link
 import ru.ruscalworld.studyplanner.common.AddLinkButton
-import ru.ruscalworld.studyplanner.common.LinkRow
 import ru.ruscalworld.studyplanner.common.CommonLayout
 import ru.ruscalworld.studyplanner.common.ExceptionHandler
 import ru.ruscalworld.studyplanner.common.InputGroup
+import ru.ruscalworld.studyplanner.common.LinkRow
 import ru.ruscalworld.studyplanner.common.LoadingScreen
-import ru.ruscalworld.studyplanner.core.model.Discipline
 import ru.ruscalworld.studyplanner.forms.link.create.CreateDisciplineLinkModal
-import ru.ruscalworld.studyplanner.ui.elements.card.NamedCardContainer
+import ru.ruscalworld.studyplanner.forms.task.group.create.CreateTaskGroupModal
+import ru.ruscalworld.studyplanner.ui.elements.card.CardButton
 import ru.ruscalworld.studyplanner.ui.elements.common.Headline
 import ru.ruscalworld.studyplanner.ui.elements.field.Field
+import ru.ruscalworld.studyplanner.ui.theme.PrimaryText
 
 @Composable
 fun DisciplineEditorScreen(
@@ -37,10 +41,11 @@ fun DisciplineEditorScreen(
     val state by viewModel.uiState.collectAsState()
     val name by viewModel.name.collectAsState()
     var createLinkModalOpen by remember { mutableStateOf(false) }
+    var createTaskGroupModalOpen by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(disciplineId) {
-        viewModel.load()
+        viewModel.load(disciplineId)
     }
 
     ExceptionHandler(
@@ -85,24 +90,51 @@ fun DisciplineEditorScreen(
 
         state.taskGroups?.let {
             for (group in it) {
-                NamedCardContainer(
-                    title = { group.name },
-                ) {
-                    if (state.tasks == null || group.id !in state.tasks!!) return@NamedCardContainer
+                val tasks = state.tasks
+                val groupId = group.id
 
-                    for (task in state.tasks!![group.id]!!) {
-                        TaskCard(task, navigateToTask = { taskId -> navigateToTask(disciplineId, taskId) })
-                    }
+                if (tasks == null) continue
+
+                TaskGroupBlock(
+                    disciplineId = disciplineId,
+                    taskGroup = group,
+                    tasks = tasks[groupId] ?: listOf(),
+                    onTaskCreated = { task -> viewModel.onTaskCreated(task) },
+                    snackbarHostState = snackbarHostState,
+                    navigateToTask = { taskId -> navigateToTask(disciplineId, taskId) }
+                )
+            }
+
+            CardButton(
+                onClick = { createTaskGroupModalOpen = true },
+                icon = {
+                    Icon(
+                        painter = painterResource(R.drawable.fa_plus_solid),
+                        tint = PrimaryText,
+                        contentDescription = null,
+                    )
                 }
+            ) {
+                stringResource(R.string.editor_discipline_tasks_groups_create)
             }
         }
     }
 
     CreateDisciplineLinkModal(
         modalOpen = createLinkModalOpen,
-        linkFactory = { request -> Discipline.Link(1, request.name, request.url) },
+        linkFactory = { request -> viewModel.createLink(request) },
         onClosed = { createLinkModalOpen = false },
         onLinkCreated = { link -> viewModel.onLinkCreated(link) },
         snackbarHostState = snackbarHostState,
     )
+
+    CreateTaskGroupModal(
+        modalOpen = createTaskGroupModalOpen,
+        onClosed = { createTaskGroupModalOpen = false },
+        disciplineId = disciplineId,
+        onTaskGroupCreated = { taskGroup -> viewModel.onTaskGroupCreated(taskGroup) },
+        snackbarHostState = snackbarHostState,
+    )
+
+    SnackbarHost(hostState = snackbarHostState)
 }

@@ -17,7 +17,7 @@ import ru.ruscalworld.studyplanner.provisioning.backend.dto.curriculum.Curriculu
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.curriculum.UpdateCurriculumRequestDto
 
 class PlannerCurriculumRepository(private val client: PlannerClient) : CurriculumRepository {
-    override suspend fun getCurriculums(): List<Curriculum> {
+    override suspend fun getDisciplines(): List<Curriculum> {
         val curriculumList: List<CurriculumDto> = client.httpClient.get("profile/curriculums").body()
         return ListDTO(curriculumList).toInternalObject()
     }

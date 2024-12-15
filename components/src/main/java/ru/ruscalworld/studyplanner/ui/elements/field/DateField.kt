@@ -29,12 +29,13 @@ import java.time.format.FormatStyle
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateField(
+    initialValue: Long?,
     modifier: Modifier = Modifier,
     onDatePicked: (Long?) -> Unit,
     confirmText: Int,
     dismissText: Int,
 ) {
-    val datePickerState = rememberDatePickerState()
+    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = initialValue)
     var showModal by remember { mutableStateOf(false) }
 
     Surface(

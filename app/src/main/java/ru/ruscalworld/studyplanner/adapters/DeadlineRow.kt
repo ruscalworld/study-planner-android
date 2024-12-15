@@ -10,15 +10,15 @@ import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.common.IconRow
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
 import ru.ruscalworld.studyplanner.ui.theme.PrimaryColor
+import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import java.util.Date
 import kotlin.math.ceil
 
 @Composable
 fun DeadlineRow(
-    deadline: Date,
+    deadline: Instant,
 ) {
     val deadlineDays = getDeadlineDays(deadline)
 
@@ -38,14 +38,14 @@ fun DeadlineRow(
                 LocalContext.current.resources.getQuantityString(R.plurals.time_days, deadlineDays),
                 DateTimeFormatter
                     .ofLocalizedDateTime(FormatStyle.SHORT)
-                    .format(deadline.toInstant().atZone(ZoneId.systemDefault()))
+                    .format(deadline.atZone(ZoneId.systemDefault()))
             ),
             style = AppTypography.bodyMedium,
         )
     }
 }
 
-fun getDeadlineDays(deadline: Date): Int {
-    val remainingMillis: Long = deadline.time - System.currentTimeMillis()
+fun getDeadlineDays(deadline: Instant): Int {
+    val remainingMillis: Long = deadline.toEpochMilli() - System.currentTimeMillis()
     return ceil((remainingMillis / 1000).toDouble() / 86400).toInt()
 }

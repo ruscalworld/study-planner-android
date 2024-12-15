@@ -7,6 +7,7 @@ data class DisciplineEditorState(
     val isLoading: Boolean = true,
     val error: Throwable? = null,
 
+    val curriculumId: Long? = null,
     val discipline: Discipline? = null,
     val taskGroups: List<Task.Group>? = null,
     val tasks: HashMap<Long, List<Task>>? = null,

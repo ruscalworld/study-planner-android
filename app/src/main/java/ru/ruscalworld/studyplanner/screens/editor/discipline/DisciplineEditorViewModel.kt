@@ -5,20 +5,34 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.core.model.Discipline
 import ru.ruscalworld.studyplanner.core.model.Task
-import java.util.Date
-import java.util.HashMap
+import ru.ruscalworld.studyplanner.core.repository.DisciplineLinkRepository
+import ru.ruscalworld.studyplanner.core.repository.DisciplineRepository
+import ru.ruscalworld.studyplanner.core.repository.TaskGroupRepository
+import ru.ruscalworld.studyplanner.core.repository.TaskRepository
+import ru.ruscalworld.studyplanner.forms.link.create.CreateLinkRequest
+import ru.ruscalworld.studyplanner.settings.ActiveCurriculumStore
+import ru.ruscalworld.studyplanner.ui.exceptions.VisibleException
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
-class DisciplineEditorViewModel @Inject constructor() : ViewModel() {
+class DisciplineEditorViewModel @Inject constructor(
+    private val activeCurriculumStore: ActiveCurriculumStore,
+    private val disciplineRepository: DisciplineRepository,
+    private val disciplineLinkRepository: DisciplineLinkRepository,
+    private val taskGroupRepository: TaskGroupRepository,
+    private val taskRepository: TaskRepository,
+) : ViewModel() {
     companion object {
         const val TAG: String = "DisciplineEditorViewModel"
     }
@@ -26,94 +40,36 @@ class DisciplineEditorViewModel @Inject constructor() : ViewModel() {
     val uiState = MutableStateFlow(DisciplineEditorState())
     val name = MutableStateFlow(TextFieldValue())
 
-    fun load() {
+    init {
+        viewModelScope.launch {
+            name
+                .debounce(1000)
+                .distinctUntilChanged()
+                .collect { updateDiscipline() }
+        }
+    }
+
+    fun load(disciplineId: Long) {
         uiState.value = DisciplineEditorState(isLoading = true)
 
         viewModelScope.launch {
             try {
+                val curriculumId = activeCurriculumStore.loadActiveCurriculum()
+                    ?: throw VisibleException(R.string.editor_discipline_error_no_discipline)
+
                 val disciplineFetcher = async {
-                    delay(1000)
-                    Discipline(1, "Test")
+                    disciplineRepository.getDiscipline(curriculumId, disciplineId)
                 }
 
-                val taskGroupsFetcher = async {
-                    delay(1200)
-                    listOf(Task.Group(1, "First Group"), Task.Group(2, "Second Group"))
-                }
-
-                val linksFetcher = async {
-                    delay(7000)
-                    listOf(Discipline.Link(1, "Yandex", "https://yandex.ru"))
-                }
-
-                val taskGroups = taskGroupsFetcher.await()
-
-                val tasks = taskGroups.map { taskGroup ->
-                    async {
-                        delay(500 * taskGroup.id)
-
-                        if (taskGroup.id == 1L)
-                            return@async GroupTasks(
-                                taskGroupId = 1,
-                                tasks = listOf(
-                                    Task(
-                                        1,
-                                        "Example very long task name bla bla bla",
-                                        "Sample description",
-                                        null,
-                                        1,
-                                        Task.Status.Available,
-                                        1,
-                                        Date(System.currentTimeMillis() + 10 * 86400 * 1000)
-                                    ),
-                                )
-                            )
-
-                        if (taskGroup.id == 2L)
-                            return@async GroupTasks(
-                                taskGroupId = 2,
-                                tasks = listOf(
-                                    Task(
-                                        1,
-                                        "Example very long task name bla bla bla",
-                                        "Sample description",
-                                        null,
-                                        2,
-                                        Task.Status.Available,
-                                        1,
-                                        Date(System.currentTimeMillis() + 10 * 86400 * 1000)
-                                    ),
-                                    Task(
-                                        1,
-                                        "Example very long task name bla bla bla",
-                                        "Sample description",
-                                        null,
-                                        2,
-                                        Task.Status.Available,
-                                        1,
-                                        Date(System.currentTimeMillis() + 10 * 86400 * 1000)
-                                    ),
-                                    Task(
-                                        1,
-                                        "Example very long task name bla bla bla",
-                                        "Sample description",
-                                        null,
-                                        2,
-                                        Task.Status.Available,
-                                        1,
-                                        Date(System.currentTimeMillis() + 10 * 86400 * 1000)
-                                    ),
-                                )
-                            )
-
-                        throw Exception("WTF")
-                    }
-                }
+                val taskGroupsFetcher = async { taskGroupRepository.getGroups(disciplineId) }
+                val linksFetcher = async { disciplineLinkRepository.getLinks(disciplineId) }
+                val tasks = async { taskRepository.getTasks(disciplineId) }
 
                 val mappedTasks = HashMap<Long, List<Task>>()
 
-                for (g in tasks.awaitAll()) {
-                    mappedTasks[g.taskGroupId] = g.tasks
+                for (t in tasks.await()) {
+                    if (t.groupId !in mappedTasks) mappedTasks[t.groupId] = mutableListOf(t)
+                    else mappedTasks[t.groupId] = mappedTasks[t.groupId]!! + t
                 }
 
                 val discipline = disciplineFetcher.await()
@@ -121,8 +77,9 @@ class DisciplineEditorViewModel @Inject constructor() : ViewModel() {
                 val state = DisciplineEditorState(
                     isLoading = false,
 
+                    curriculumId = curriculumId,
                     discipline = discipline,
-                    taskGroups = taskGroups,
+                    taskGroups = taskGroupsFetcher.await(),
                     tasks = mappedTasks,
                     links = linksFetcher.await(),
                 )
@@ -136,11 +93,60 @@ class DisciplineEditorViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    suspend fun createLink(request: CreateLinkRequest): Discipline.Link {
+        val discipline = uiState.value.discipline
+
+        return if (discipline == null)
+            throw VisibleException(R.string.editor_discipline_error_no_discipline)
+        else
+            disciplineLinkRepository.createLink(discipline.id, Discipline.Link.CreateRequest(request.name, request.url))
+    }
+
+    private fun updateDiscipline() {
+        viewModelScope.launch {
+            val discipline = uiState.value.discipline
+            val curriculumId = uiState.value.curriculumId
+            Log.d(TAG, "updateDiscipline: ${discipline?.id}, \"${name.value.text}\"")
+            if (discipline == null || curriculumId == null) return@launch
+
+            try {
+                disciplineRepository.updateDiscipline(
+                    curriculumId,
+                    discipline.id,
+                    Discipline.UpdateRequest(name.value.text)
+                )
+            } catch (e: Exception) {
+                Log.e(TAG, "Data update failed", e)
+                uiState.update { it.copy(error = e) }
+            }
+        }
+    }
+
     fun onNameChanged(value: TextFieldValue) {
         name.value = value
     }
 
     fun onLinkCreated(link: Discipline.Link) {
-        uiState.update { it.copy(links = it.links!! + link) }
+        uiState.update { it.copy(links = it.links?.plus(link)) }
+    }
+
+    fun onTaskGroupCreated(taskGroup: Task.Group) {
+        uiState.update {
+            it.copy(taskGroups = it.taskGroups?.plus(taskGroup))
+        }
+    }
+
+    fun onTaskCreated(task: Task) {
+        Log.d(TAG, "onTaskCreated invoked")
+        uiState.update { state ->
+            val currentTasks = state.tasks ?: HashMap()
+            val updatedTasks = currentTasks.toMutableMap()
+
+            val groupTasks = updatedTasks[task.groupId]?.toMutableList() ?: mutableListOf()
+            groupTasks.add(task)
+            updatedTasks[task.groupId] = groupTasks
+
+            state.copy(tasks = HashMap(updatedTasks))
+        }
     }
 }

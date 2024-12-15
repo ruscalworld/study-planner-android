@@ -28,7 +28,7 @@ class InfoViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val curriculumFetcher = async { curriculumRepository.getCurriculums() }
+                val curriculumFetcher = async { curriculumRepository.getDisciplines() }
 
                 val state = InfoState(
                     isLoading = false,

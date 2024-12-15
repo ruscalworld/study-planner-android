@@ -107,20 +107,25 @@
     <string name="editor_curriculum_semester_no_label">Semester number</string>
 
     <string name="editor_curriculum_disciplines_title">Disciplines</string>
+    <string name="editor_curriculum_disciplines_create">Add discipline</string>
 
     <!-- Editor -> Discipline -->
     <string name="editor_discipline_loading_title">Loading…</string>
     <string name="editor_discipline_loading_description">This could take a few seconds</string>
     <string name="editor_discipline_unknown_error">Unable to load discipline data</string>
+    <string name="editor_discipline_error_no_discipline">No discipline picked</string>
 
     <string name="editor_discipline_title">Discipline</string>
     <string name="editor_discipline_task_no_description">No description</string>
+    <string name="editor_discipline_tasks_groups_create">Add task group</string>
+    <string name="editor_discipline_tasks_create">Add task</string>
     <string name="editor_discipline_name_label">Name</string>
 
     <!-- Editor -> Task -->
     <string name="editor_task_loading_title">Loading…</string>
     <string name="editor_task_loading_description">This could take a few seconds</string>
     <string name="editor_task_unknown_error">Unable to load task data</string>
+    <string name="editor_task_error_no_task">No task picked</string>
 
     <string name="editor_task_title">Task</string>
     <string name="editor_task_name_label">Name</string>
@@ -151,10 +156,32 @@
     <string name="form_curriculum_create_confirm_text">Create</string>
     <string name="form_curriculum_create_unknown_error">Could not create a curriculum</string>
 
+    <!-- Create discipline -->
+    <string name="form_discipline_create_title">Create discipline</string>
+    <string name="form_discipline_create_name_label">Discipline name</string>
+    <string name="form_discipline_create_confirm_text">Create</string>
+    <string name="form_discipline_create_unknown_error">Could not create a discipline</string>
+
+    <!-- Create task group -->
+    <string name="form_task_group_create_title">Create group</string>
+    <string name="form_task_group_create_name_label">Group name</string>
+    <string name="form_task_group_create_confirm_text">Create</string>
+    <string name="form_task_group_create_unknown_error">Could not create a task group</string>
+
+    <!-- Create task -->
+    <string name="form_task_create_title">Create task</string>
+    <string name="form_task_create_title_label">Task title</string>
+    <string name="form_task_create_external_name_label">Short description</string>
+    <string name="form_task_create_confirm_text">Create</string>
+    <string name="form_task_create_unknown_error">Could not create a task</string>
+
     <!-- Create link -->
     <string name="form_link_create_title">Create link</string>
     <string name="form_link_create_name_label">Link name</string>
     <string name="form_link_create_url_label">URL</string>
     <string name="form_link_create_confirm_text">Create</string>
+
+    <string name="form_link_create_error_empty_name">Please provide a name</string>
+    <string name="form_link_create_error_invalid_url">Please provide a valid URL</string>
     <string name="form_link_create_unknown_error">Could not create a link</string>
 </resources>

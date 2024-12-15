@@ -1,6 +1,7 @@
 package ru.ruscalworld.studyplanner.screens.editor.task
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,7 +24,6 @@ import ru.ruscalworld.studyplanner.common.InputGroup
 import ru.ruscalworld.studyplanner.common.LinkRow
 import ru.ruscalworld.studyplanner.common.LoadingScreen
 import ru.ruscalworld.studyplanner.common.TextFieldRow
-import ru.ruscalworld.studyplanner.core.model.Task
 import ru.ruscalworld.studyplanner.forms.link.create.CreateTaskLinkModal
 import ru.ruscalworld.studyplanner.ui.elements.common.Headline
 import ru.ruscalworld.studyplanner.ui.elements.field.DateField
@@ -41,6 +41,7 @@ fun TaskEditorScreen(
     val externalName by viewModel.externalName.collectAsState()
     val description by viewModel.description.collectAsState()
     val difficulty by viewModel.difficulty.collectAsState()
+    val deadline by viewModel.deadline.collectAsState()
 
     var createLinkModalOpen by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -121,6 +122,7 @@ fun TaskEditorScreen(
                 label = { stringResource(R.string.editor_task_deadline_label) },
             ) {
                 DateField(
+                    initialValue = deadline,
                     modifier = Modifier.fillMaxWidth(),
                     onDatePicked = { viewModel.onDeadlineChanged(it) },
                     confirmText = R.string.editor_task_deadline_pick_confirm,
@@ -132,9 +134,11 @@ fun TaskEditorScreen(
 
     CreateTaskLinkModal(
         modalOpen = createLinkModalOpen,
-        linkFactory = { request -> Task.Link(1, request.name, request.url) },
+        linkFactory = { request -> viewModel.createLink(disciplineId, request) },
         onClosed = { createLinkModalOpen = false },
         onLinkCreated = { link -> viewModel.onLinkCreated(link) },
         snackbarHostState = snackbarHostState,
     )
+
+    SnackbarHost(hostState = snackbarHostState)
 }

@@ -1,3 +1,3 @@
 package ru.ruscalworld.studyplanner.ui.exceptions
 
-class VisibleException(val displayedMessage: Int) : Throwable()
+class VisibleException(val displayedMessage: Int) : Exception()
