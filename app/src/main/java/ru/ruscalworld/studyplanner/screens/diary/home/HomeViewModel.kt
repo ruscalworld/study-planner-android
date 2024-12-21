@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.core.repository.CurriculumRepository
 import ru.ruscalworld.studyplanner.core.repository.DisciplineRepository
+import ru.ruscalworld.studyplanner.core.repository.TaskRepository
 import ru.ruscalworld.studyplanner.settings.ActiveCurriculumStore
 import ru.ruscalworld.studyplanner.ui.exceptions.VisibleException
 import javax.inject.Inject
@@ -21,6 +22,7 @@ class HomeViewModel @Inject constructor(
     private val activeCurriculumStore: ActiveCurriculumStore,
     private val curriculumRepository: CurriculumRepository,
     private val disciplineRepository: DisciplineRepository,
+    private val taskRepository: TaskRepository,
 ) : ViewModel() {
     companion object {
         const val TAG = "HomeViewModel"
@@ -47,14 +49,21 @@ class HomeViewModel @Inject constructor(
                 val disciplines = disciplinesFetcher.await()
 
                 val disciplineProgressFetcher = disciplines.map {
-                    async { DisciplineProgress(it, disciplineRepository.getState(it.id)) }
+                    async { DisciplineProgress(it, disciplineRepository.getStats(it.id)) }
+                }
+
+                val tasksProgressFetcher = upcomingTasksFetcher.await().map {
+                    async {
+                        val progress = taskRepository.getTaskProgress(it.discipline.id, it.id)
+                        Pair(it, progress)
+                    }
                 }
 
                 val state = HomeState(
                     isLoading = false,
 
                     disciplines = disciplineProgressFetcher.awaitAll(),
-                    prioritizedTasks = upcomingTasksFetcher.await(),
+                    prioritizedTasks = tasksProgressFetcher.awaitAll(),
                 )
 
                 uiState.value = state

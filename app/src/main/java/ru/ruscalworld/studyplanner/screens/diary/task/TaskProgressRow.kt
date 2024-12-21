@@ -8,21 +8,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ru.ruscalworld.studyplanner.R
+import ru.ruscalworld.studyplanner.common.ProgressIcon
 import ru.ruscalworld.studyplanner.core.model.TaskProgress
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
-import ru.ruscalworld.studyplanner.ui.theme.Blue
-import ru.ruscalworld.studyplanner.ui.theme.Green
-import ru.ruscalworld.studyplanner.ui.theme.Red
-import ru.ruscalworld.studyplanner.ui.theme.Yellow
 
 @Composable
 fun TaskProgressRow(
@@ -37,7 +32,7 @@ fun TaskProgressRow(
             modifier = Modifier.size(48.dp),
             contentAlignment = Alignment.Center,
         ) {
-            ProgressIcon(status)
+            ProgressIcon(status, modifier = Modifier.size(32.dp))
         }
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -62,27 +57,4 @@ fun TaskProgressRow(
             )
         }
     }
-}
-
-@Composable
-fun ProgressIcon(status: TaskProgress.Status) {
-    Icon(
-        painter = when (status) {
-            TaskProgress.Status.NotStarted -> painterResource(R.drawable.fa_xmark_solid)
-            TaskProgress.Status.InProgress -> painterResource(R.drawable.fa_hourglass_half_solid)
-            TaskProgress.Status.NeedsProtection -> painterResource(R.drawable.fa_umbrella_solid)
-            TaskProgress.Status.Completed -> painterResource(R.drawable.fa_check_solid)
-        },
-
-        contentDescription = null,
-
-        tint = when (status) {
-            TaskProgress.Status.NotStarted -> Red
-            TaskProgress.Status.InProgress -> Blue
-            TaskProgress.Status.NeedsProtection -> Yellow
-            TaskProgress.Status.Completed -> Green
-        },
-
-        modifier = Modifier.size(32.dp)
-    )
 }

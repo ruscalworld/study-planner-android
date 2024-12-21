@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.core.model.Task
+import ru.ruscalworld.studyplanner.core.model.TaskProgress
 import ru.ruscalworld.studyplanner.core.repository.DisciplineLinkRepository
 import ru.ruscalworld.studyplanner.core.repository.DisciplineRepository
 import ru.ruscalworld.studyplanner.core.repository.TaskGroupRepository
@@ -46,13 +47,32 @@ class DisciplineViewModel @Inject constructor(
 
                 val taskGroupsFetcher = async { taskGroupRepository.getGroups(disciplineId) }
                 val linksFetcher = async { disciplineLinkRepository.getLinks(disciplineId) }
-                val tasks = async { taskRepository.getTasks(disciplineId) }
+                val tasksFetcher = async { taskRepository.getTasks(disciplineId) }
+                val progressFetcher = async { disciplineRepository.getProgress(disciplineId) }
 
-                val mappedTasks = HashMap<Long, List<Task>>()
+                val mappedTasks = HashMap<Long, HashMap<Long, Pair<Task, TaskProgress?>>>()
 
-                for (t in tasks.await()) {
-                    if (t.groupId !in mappedTasks) mappedTasks[t.groupId] = mutableListOf(t)
-                    else mappedTasks[t.groupId] = mappedTasks[t.groupId]!! + t
+                for (t in tasksFetcher.await()) {
+                    if (t.groupId !in mappedTasks) mappedTasks[t.groupId] = hashMapOf(t.id to Pair(t, null))
+                    else mappedTasks[t.groupId]!![t.id] = Pair(t, null)
+                }
+
+                for (p in progressFetcher.await()) {
+                    if (p.taskGroupId !in mappedTasks) continue
+                    val groupTasks = mappedTasks[p.taskGroupId]!!
+
+                    if (p.taskId !in groupTasks) continue
+                    val taskInfo = groupTasks[p.taskId]!!
+
+                    groupTasks[p.taskId] = taskInfo.copy(second = p.taskProgress)
+                }
+
+                val tasks = HashMap<Long, List<Pair<Task, TaskProgress>>>()
+
+                for ((groupId, taskMap) in mappedTasks) {
+                    tasks[groupId] = taskMap.values.map {
+                        Pair(it.first, it.second ?: TaskProgress(TaskProgress.Status.NotStarted))
+                    }
                 }
 
                 val discipline = disciplineFetcher.await()
@@ -62,7 +82,7 @@ class DisciplineViewModel @Inject constructor(
 
                     discipline = discipline,
                     taskGroups = taskGroupsFetcher.await(),
-                    tasks = mappedTasks,
+                    tasks = tasks,
                     links = linksFetcher.await(),
                 )
 

@@ -10,6 +10,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import ru.ruscalworld.studyplanner.core.model.Discipline
 import ru.ruscalworld.studyplanner.core.model.GenericStats
+import ru.ruscalworld.studyplanner.core.model.ScopedTaskProgress
 import ru.ruscalworld.studyplanner.core.repository.DisciplineRepository
 import ru.ruscalworld.studyplanner.provisioning.backend.PlannerClient
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.ListDTO
@@ -17,6 +18,7 @@ import ru.ruscalworld.studyplanner.provisioning.backend.dto.common.GenericStatsD
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.discipline.CreateDisciplineRequestDto
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.discipline.DisciplineDto
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.discipline.UpdateDisciplineRequestDto
+import ru.ruscalworld.studyplanner.provisioning.backend.dto.task.ScopedTaskProgressDto
 
 class PlannerDisciplineRepository(private val client: PlannerClient) : DisciplineRepository {
     override suspend fun getDisciplines(curriculumId: Long): List<Discipline> {
@@ -68,11 +70,19 @@ class PlannerDisciplineRepository(private val client: PlannerClient) : Disciplin
         client.httpClient.delete("curriculums/$curriculumId/disciplines/$id")
     }
 
-    override suspend fun getState(id: Long): GenericStats {
+    override suspend fun getStats(id: Long): GenericStats {
         val stats: GenericStatsDto = client.httpClient.get(
             "disciplines/$id/stats"
         ).body()
 
         return stats.toInternalObject()
+    }
+
+    override suspend fun getProgress(id: Long): List<ScopedTaskProgress> {
+        val stats: List<ScopedTaskProgressDto> = client.httpClient.get(
+            "disciplines/$id/progress"
+        ).body()
+
+        return ListDTO(stats).toInternalObject()
     }
 }

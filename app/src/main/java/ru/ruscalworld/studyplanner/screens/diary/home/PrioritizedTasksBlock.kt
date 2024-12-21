@@ -5,11 +5,12 @@ import androidx.compose.ui.res.stringResource
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.adapters.TaskCard
 import ru.ruscalworld.studyplanner.core.model.DisciplineTask
+import ru.ruscalworld.studyplanner.core.model.TaskProgress
 import ru.ruscalworld.studyplanner.ui.elements.card.NamedCardContainer
 
 @Composable
 fun PrioritizedTasksBlock(
-    tasks: List<DisciplineTask>,
+    tasks: List<Pair<DisciplineTask, TaskProgress>>,
     navigateToTask: (Long, Long) -> Unit,
 ) {
     NamedCardContainer(
@@ -18,7 +19,8 @@ fun PrioritizedTasksBlock(
     ) {
         for (task in tasks) {
             TaskCard(
-                task = task,
+                task = task.first,
+                progress = task.second,
                 navigateToTask = navigateToTask,
             )
         }

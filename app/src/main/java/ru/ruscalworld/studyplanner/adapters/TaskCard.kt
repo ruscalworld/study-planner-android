@@ -9,12 +9,14 @@ import androidx.compose.ui.unit.dp
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.core.model.DisciplineTask
 import ru.ruscalworld.studyplanner.core.model.Task
+import ru.ruscalworld.studyplanner.core.model.TaskProgress
 import ru.ruscalworld.studyplanner.ui.elements.card.Card
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
 
 @Composable
 fun TaskCard(
     task: Task,
+    progress: TaskProgress,
     navigateToTask: (Long) -> Unit,
 ) {
     Card(
@@ -30,8 +32,12 @@ fun TaskCard(
                 task.externalName?.let { Text(it, style = AppTypography.labelMedium) }
             }
 
-            task.deadline?.let { DeadlineRow(it) }
+            if (progress.status != TaskProgress.Status.Completed) {
+                task.deadline?.let { DeadlineRow(it) }
+            }
+
             EstimatedTimeRow(task.difficulty)
+            ProgressRow(progress)
         }
     }
 }
@@ -39,6 +45,7 @@ fun TaskCard(
 @Composable
 fun TaskCard(
     task: DisciplineTask,
+    progress: TaskProgress,
     navigateToTask: (Long, Long) -> Unit,
 ) {
     Card(
@@ -55,13 +62,20 @@ fun TaskCard(
                     style = AppTypography.displayMedium,
                 )
                 Text(
-                    task.name + task.externalName?.let { " " + stringResource(R.string.quoted_string, it) },
+                    text = task.externalName?.let {
+                        task.name + " " + stringResource(R.string.quoted_string, it)
+                    } ?: task.name,
+
                     style = AppTypography.labelMedium,
                 )
             }
 
-            task.deadline?.let { DeadlineRow(it) }
+            if (progress.status != TaskProgress.Status.Completed) {
+                task.deadline?.let { DeadlineRow(it) }
+            }
+
             EstimatedTimeRow(task.difficulty)
+            ProgressRow(progress)
         }
     }
 }

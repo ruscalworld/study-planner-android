@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import ru.ruscalworld.studyplanner.adapters.DeadlineRow
+import ru.ruscalworld.studyplanner.adapters.EstimatedTimeRow
 import ru.ruscalworld.studyplanner.adapters.Link
 import ru.ruscalworld.studyplanner.common.LinkRow
 import ru.ruscalworld.studyplanner.core.model.TaskProgress
@@ -36,6 +38,13 @@ fun TaskScreenContent(
                 }
             }
         }
+    }
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        state.task?.deadline?.let { DeadlineRow(it) }
+        state.task?.let { EstimatedTimeRow(it.difficulty) }
     }
 
     state.task?.description?.let {
