@@ -60,6 +60,7 @@ fun CurriculumEditorScreen(
             curriculumId = it.id,
             snackbarHostState = snackbarHostState,
             modalOpen = disciplineModalOpen,
+            onClosed = { disciplineModalOpen = false },
             onDisciplineCreated = { discipline ->
                 viewModel.onDisciplineAdded(discipline)
                 disciplineModalOpen = false
