@@ -98,6 +98,7 @@
     <string name="diary_task_status_completed">Выполнено</string>
     <string name="diary_task_status_edit_button">Изменить статус</string>
 
+    <string name="diary_task_status_calendar_event_button">Добавить в календарь</string>
     <string name="diary_task_transition_mark_as_in_progress">В процессе</string>
     <string name="diary_task_transition_mark_as_completed">Выполнено</string>
     <string name="diary_task_transition_mark_as_not_started">Не начато</string>

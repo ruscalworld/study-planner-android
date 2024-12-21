@@ -49,7 +49,7 @@ fun MarkAsNotStartedButton(onChangeRequest: (TaskProgress.Status) -> Unit) {
 fun MarkAsInProgressButton(onChangeRequest: (TaskProgress.Status) -> Unit) {
     TransitionButton(
         onClick = { onChangeRequest(TaskProgress.Status.InProgress) },
-        icon = R.drawable.fa_hourglass_half_solid,
+        icon = R.drawable.fa_rocket_solid,
         text = R.string.diary_task_transition_mark_as_in_progress,
     )
 }

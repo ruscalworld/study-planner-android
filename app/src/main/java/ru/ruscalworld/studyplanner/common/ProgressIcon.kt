@@ -17,7 +17,7 @@ fun ProgressIcon(status: TaskProgress.Status, modifier: Modifier = Modifier) {
     Icon(
         painter = when (status) {
             TaskProgress.Status.NotStarted -> painterResource(R.drawable.fa_xmark_solid)
-            TaskProgress.Status.InProgress -> painterResource(R.drawable.fa_hourglass_half_solid)
+            TaskProgress.Status.InProgress -> painterResource(R.drawable.fa_rocket_solid)
             TaskProgress.Status.NeedsProtection -> painterResource(R.drawable.fa_umbrella_solid)
             TaskProgress.Status.Completed -> painterResource(R.drawable.fa_check_solid)
         },

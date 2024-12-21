@@ -91,6 +91,7 @@
     <string name="diary_task_status_needs_protection">Needs protection</string>
     <string name="diary_task_status_completed">Completed</string>
     <string name="diary_task_status_edit_button">Change status</string>
+    <string name="diary_task_status_calendar_event_button">Add calendar event</string>
 
     <string name="diary_task_transition_mark_as_in_progress">Mark as in progress</string>
     <string name="diary_task_transition_mark_as_completed">Mark as completed</string>

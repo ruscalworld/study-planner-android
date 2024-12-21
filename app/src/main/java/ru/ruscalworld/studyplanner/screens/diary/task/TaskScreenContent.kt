@@ -63,4 +63,8 @@ fun TaskScreenContent(
             )
         }
     }
+
+    if (state.progress?.status != TaskProgress.Status.Completed) {
+        state.task?.let { AddCalendarEventButton(eventName = it.name) }
+    }
 }
