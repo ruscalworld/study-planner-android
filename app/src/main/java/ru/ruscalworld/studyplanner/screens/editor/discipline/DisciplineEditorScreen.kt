@@ -25,6 +25,7 @@ fun DisciplineEditorScreen(
     viewModel: DisciplineEditorViewModel = hiltViewModel(),
     disciplineId: Long,
     navigateToTask: (Long, Long) -> Unit,
+    navigateBack: () -> Unit,
     scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -57,6 +58,7 @@ fun DisciplineEditorScreen(
                 snackbarHostState = snackbarHostState,
                 onCreateLinkRequest = { createLinkModalOpen = true },
                 onCreateTaskGroupRequest = { createTaskGroupModalOpen = true },
+                onDeleteRequest = { viewModel.deleteDiscipline(disciplineId) { navigateBack() } }
             )
         }
     }

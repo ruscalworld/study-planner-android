@@ -123,6 +123,7 @@ fun NavRoot(
                 disciplineId = backStackEntry.arguments?.getLong("disciplineId")!!,
                 navigateToTask = { disciplineId, taskId -> navController.navigate("editor/disciplines/$disciplineId/tasks/$taskId") },
                 scaffoldPadding = scaffoldPadding,
+                navigateBack = { navController.popBackStack("editor/curriculums/@current", false) },
             )
         }
 
@@ -142,7 +143,7 @@ fun NavRoot(
                         "editor/disciplines/${ backStackEntry.arguments?.getLong("disciplineId") }",
                         false,
                     )
-                }
+                },
             )
         }
 

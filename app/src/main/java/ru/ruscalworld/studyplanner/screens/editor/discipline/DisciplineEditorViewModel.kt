@@ -20,6 +20,7 @@ import ru.ruscalworld.studyplanner.core.repository.DisciplineRepository
 import ru.ruscalworld.studyplanner.core.repository.TaskGroupRepository
 import ru.ruscalworld.studyplanner.core.repository.TaskRepository
 import ru.ruscalworld.studyplanner.forms.link.create.CreateLinkRequest
+import ru.ruscalworld.studyplanner.screens.editor.task.TaskEditorViewModel
 import ru.ruscalworld.studyplanner.settings.ActiveCurriculumStore
 import ru.ruscalworld.studyplanner.ui.exceptions.VisibleException
 import javax.inject.Inject
@@ -117,6 +118,36 @@ class DisciplineEditorViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 Log.e(TAG, "Data update failed", e)
+                uiState.update { it.copy(error = e) }
+            }
+        }
+    }
+
+    fun deleteDiscipline(disciplineId: Long, then: () -> Unit) {
+        viewModelScope.launch {
+            val curriculumId = uiState.value.curriculumId
+            Log.d(TaskEditorViewModel.Companion.TAG, "deleteDiscipline: $curriculumId/$disciplineId")
+            if (curriculumId == null) return@launch
+
+            try {
+                disciplineRepository.deleteDiscipline(curriculumId, disciplineId)
+                then()
+            } catch (e: Exception) {
+                Log.e(TaskEditorViewModel.Companion.TAG, "Deletion failed", e)
+                uiState.update { it.copy(error = e) }
+            }
+        }
+    }
+
+    fun deleteTaskGroup(disciplineId: Long, taskGroup: Task.Group) {
+        viewModelScope.launch {
+            Log.d(TaskEditorViewModel.Companion.TAG, "deleteTaskGroup: $disciplineId/${taskGroup.id}")
+
+            try {
+                taskGroupRepository.deleteGroup(disciplineId, taskGroup.id)
+                uiState.update { it.copy(taskGroups = it.taskGroups?.let { it - taskGroup }) }
+            } catch (e: Exception) {
+                Log.e(TaskEditorViewModel.Companion.TAG, "Deletion failed", e)
                 uiState.update { it.copy(error = e) }
             }
         }

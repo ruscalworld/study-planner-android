@@ -120,12 +120,16 @@
     <string name="editor_discipline_loading_description">This could take a few seconds</string>
     <string name="editor_discipline_unknown_error">Unable to load discipline data</string>
     <string name="editor_discipline_error_no_discipline">No discipline picked</string>
+    <string name="editor_discipline_delete_button">Delete discipline</string>
+    <string name="editor_discipline_delete_confirm_button">Are you sure?</string>
 
     <string name="editor_discipline_title">Discipline</string>
     <string name="editor_discipline_name_label">Name</string>
     <string name="editor_discipline_task_no_description">No description</string>
     <string name="editor_discipline_tasks_groups_create">Add task group</string>
     <string name="editor_discipline_tasks_create">Add task</string>
+    <string name="editor_discipline_tasks_groups_delete_button">Delete group</string>
+    <string name="editor_discipline_tasks_groups_delete_confirm_button">Are you sure?</string>
 
     <!-- Editor -> Task -->
     <string name="editor_task_loading_title">Loading…</string>

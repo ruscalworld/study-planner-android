@@ -13,6 +13,7 @@ import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.core.model.Task
 import ru.ruscalworld.studyplanner.forms.task.create.CreateTaskModal
 import ru.ruscalworld.studyplanner.ui.elements.card.CardButton
+import ru.ruscalworld.studyplanner.ui.elements.card.ConfirmationButton
 import ru.ruscalworld.studyplanner.ui.elements.card.NamedCardContainer
 import ru.ruscalworld.studyplanner.ui.theme.PrimaryText
 
@@ -23,6 +24,7 @@ fun TaskGroupBlock(
     tasks: List<Task>,
     navigateToTask: (Long) -> Unit,
     onTaskCreated: (Task) -> Unit,
+    onDeleteRequest: () -> Unit,
     snackbarHostState: SnackbarHostState,
 ) {
     var createTaskModalOpen by remember { mutableStateOf(false) }
@@ -46,6 +48,19 @@ fun TaskGroupBlock(
         ) {
             stringResource(R.string.editor_discipline_tasks_create)
         }
+
+        ConfirmationButton(
+            onConfirm = onDeleteRequest,
+            content = { stringResource(R.string.editor_discipline_tasks_groups_delete_button) },
+            confirmContent = { stringResource(R.string.editor_discipline_tasks_groups_delete_confirm_button) },
+            icon = {
+                Icon(
+                    painter = painterResource(R.drawable.fa_trash_can_solid),
+                    tint = PrimaryText,
+                    contentDescription = null,
+                )
+            }
+        )
     }
 
     CreateTaskModal(

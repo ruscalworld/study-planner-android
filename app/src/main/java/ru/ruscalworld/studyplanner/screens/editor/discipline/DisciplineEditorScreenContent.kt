@@ -18,6 +18,7 @@ import ru.ruscalworld.studyplanner.common.AddLinkButton
 import ru.ruscalworld.studyplanner.common.InputGroup
 import ru.ruscalworld.studyplanner.common.LinkRow
 import ru.ruscalworld.studyplanner.ui.elements.card.CardButton
+import ru.ruscalworld.studyplanner.ui.elements.card.ConfirmationButton
 import ru.ruscalworld.studyplanner.ui.elements.common.Headline
 import ru.ruscalworld.studyplanner.ui.elements.field.Field
 import ru.ruscalworld.studyplanner.ui.theme.PrimaryText
@@ -30,6 +31,7 @@ fun DisciplineEditorScreenContent(
     snackbarHostState: SnackbarHostState,
     onCreateLinkRequest: () -> Unit,
     onCreateTaskGroupRequest: () -> Unit,
+    onDeleteRequest: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
     val name by viewModel.name.collectAsState()
@@ -71,7 +73,8 @@ fun DisciplineEditorScreenContent(
                 tasks = tasks[groupId] ?: listOf(),
                 onTaskCreated = { task -> viewModel.onTaskCreated(task) },
                 snackbarHostState = snackbarHostState,
-                navigateToTask = { taskId -> navigateToTask(disciplineId, taskId) }
+                navigateToTask = { taskId -> navigateToTask(disciplineId, taskId) },
+                onDeleteRequest = { viewModel.deleteTaskGroup(disciplineId, group) }
             )
         }
 
@@ -88,4 +91,17 @@ fun DisciplineEditorScreenContent(
             stringResource(R.string.editor_discipline_tasks_groups_create)
         }
     }
+
+    ConfirmationButton(
+        onConfirm = onDeleteRequest,
+        content = { stringResource(R.string.editor_discipline_delete_button) },
+        confirmContent = { stringResource(R.string.editor_discipline_delete_confirm_button) },
+        icon = {
+            Icon(
+                painter = painterResource(R.drawable.fa_trash_can_solid),
+                tint = PrimaryText,
+                contentDescription = null,
+            )
+        }
+    )
 }

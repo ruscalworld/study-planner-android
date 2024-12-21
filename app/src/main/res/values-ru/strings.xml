@@ -126,12 +126,16 @@
     <string name="editor_discipline_loading_description">Загружаем данные о дисциплине</string>
     <string name="editor_discipline_unknown_error">Не удалось загрузить данные о дисциплине</string>
     <string name="editor_discipline_error_no_discipline">Дисциплина не выбрана</string>
+    <string name="editor_discipline_delete_button">Удалить дисциплину</string>
+    <string name="editor_discipline_delete_confirm_button">Точно удалить?</string>
 
     <string name="editor_discipline_title">Дисциплина</string>
     <string name="editor_discipline_name_label">Название</string>
     <string name="editor_discipline_task_no_description">Нет описания</string>
     <string name="editor_discipline_tasks_groups_create">Добавить группу</string>
     <string name="editor_discipline_tasks_create">Добавить задание</string>
+    <string name="editor_discipline_tasks_groups_delete_button">Удалить группу</string>
+    <string name="editor_discipline_tasks_groups_delete_confirm_button">Точно удалить?</string>
 
     <!-- Editor -> Task -->
     <string name="editor_task_loading_title">Один момент…</string>
