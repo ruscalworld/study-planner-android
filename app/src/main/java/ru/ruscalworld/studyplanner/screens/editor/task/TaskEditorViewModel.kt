@@ -116,6 +116,20 @@ class TaskEditorViewModel @Inject constructor(
         }
     }
 
+    fun deleteTask(disciplineId: Long, taskId: Long, then: () -> Unit) {
+        viewModelScope.launch {
+            Log.d(TAG, "deleteTask: $disciplineId/$taskId")
+
+            try {
+                taskRepository.deleteTask(disciplineId, taskId)
+                then()
+            } catch (e: Exception) {
+                Log.e(TAG, "Deletion failed", e)
+                uiState.update { it.copy(error = e) }
+            }
+        }
+    }
+
     fun onNameChanged(value: TextFieldValue) {
         name.value = value
     }

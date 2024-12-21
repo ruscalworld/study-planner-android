@@ -25,6 +25,7 @@ fun TaskEditorScreen(
     disciplineId: Long,
     taskId: Long,
     scaffoldPadding: PaddingValues,
+    navigateBack: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -51,7 +52,8 @@ fun TaskEditorScreen(
     LoadingVisibility(isLoading = state.isLoading) {
         CommonLayout(scaffoldPadding = scaffoldPadding) {
             TaskEditorScreenContent(
-                onCreateLinkRequest = { createLinkModalOpen = true }
+                onCreateLinkRequest = { createLinkModalOpen = true },
+                onDeleteRequest = { viewModel.deleteTask(disciplineId, taskId) { navigateBack() } },
             )
         }
     }

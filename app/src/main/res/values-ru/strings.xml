@@ -68,6 +68,7 @@
     <string name="start_curriculum_code_placeholder">Код приглашения</string>
     <string name="start_curriculum_create_new">Создать учебный план</string>
     <string name="start_curriculum_add_existing">Добавить учебный план</string>
+    <string name="start_curriculum_skip">Пропустить</string>
     <string name="start_curriculum_add_existing_unknown_error">Не удалось добавить учебный план</string>
 
     <!-- Diary -> Home -->
@@ -97,8 +98,8 @@
     <string name="diary_task_status_needs_protection">Готово к защите</string>
     <string name="diary_task_status_completed">Выполнено</string>
     <string name="diary_task_status_edit_button">Изменить статус</string>
-
     <string name="diary_task_status_calendar_event_button">Добавить в календарь</string>
+
     <string name="diary_task_transition_mark_as_in_progress">В процессе</string>
     <string name="diary_task_transition_mark_as_completed">Выполнено</string>
     <string name="diary_task_transition_mark_as_not_started">Не начато</string>
@@ -137,6 +138,8 @@
     <string name="editor_task_loading_description">Загружаем данные о задании</string>
     <string name="editor_task_unknown_error">Не удалось загрузить данные о задании</string>
     <string name="editor_task_error_no_task">Задание не выбрано</string>
+    <string name="editor_task_delete_button">Удалить задание</string>
+    <string name="editor_task_delete_confirm_button">Точно удалить?</string>
 
     <string name="editor_task_title">Задание</string>
     <string name="editor_task_name_label">Название</string>

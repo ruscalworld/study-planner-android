@@ -57,7 +57,17 @@ fun NavRoot(
 
                         launchSingleTop = true
                     }
-                }
+                },
+
+                navigateToInfo = {
+                    navController.navigate("options/info") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+
+                        launchSingleTop = true
+                    }
+                },
             )
         }
 
@@ -127,6 +137,12 @@ fun NavRoot(
                 disciplineId = backStackEntry.arguments?.getLong("disciplineId")!!,
                 taskId = backStackEntry.arguments?.getLong("taskId")!!,
                 scaffoldPadding = scaffoldPadding,
+                navigateBack = {
+                    navController.popBackStack(
+                        "editor/disciplines/${ backStackEntry.arguments?.getLong("disciplineId") }",
+                        false,
+                    )
+                }
             )
         }
 

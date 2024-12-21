@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
 import ru.ruscalworld.studyplanner.ui.theme.CardBackground
@@ -25,8 +26,9 @@ import ru.ruscalworld.studyplanner.ui.theme.PrimaryText
 fun CardButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    borderColor: Color = CardBorder,
     icon: @Composable () -> Unit,
-    content: @Composable () -> String
+    content: @Composable () -> String,
 ) {
     ElevatedButton(
         onClick,
@@ -38,7 +40,7 @@ fun CardButton(
             disabledContentColor = PrimaryText,
         ),
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
-        border = BorderStroke(2.dp, CardBorder),
+        border = BorderStroke(2.dp, borderColor),
         modifier = modifier
             .height(56.dp)
             .fillMaxWidth(),

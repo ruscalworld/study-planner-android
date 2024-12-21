@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -38,12 +39,13 @@ import ru.ruscalworld.studyplanner.core.model.Curriculum
 import ru.ruscalworld.studyplanner.forms.curriculum.create.CreateCurriculumModal
 import ru.ruscalworld.studyplanner.ui.elements.button.Button
 import ru.ruscalworld.studyplanner.ui.theme.AppTypography
-
+import ru.ruscalworld.studyplanner.ui.theme.SecondaryText
 
 @Composable
 fun PickCurriculumScreen(
     viewModel: PickCurriculumViewModel = hiltViewModel(),
     navigateToCurriculum: (Long) -> Unit,
+    navigateToInfo: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -74,7 +76,8 @@ fun PickCurriculumScreen(
             isLoading = state.isLoading,
             snackbarHostState = snackbarHostState,
             onCurriculumCreated = { navigateToCurriculum(it.id) },
-            onAddExistingRequest = { viewModel.addExistingCurriculum(it) }
+            onAddExistingRequest = { viewModel.addExistingCurriculum(it) },
+            onDismissed = { navigateToInfo() },
         )
     }
 }
@@ -118,6 +121,7 @@ fun ActionArea(
     snackbarHostState: SnackbarHostState,
     onCurriculumCreated: (Curriculum) -> Unit,
     onAddExistingRequest: (AddExistingCurriculumRequest) -> Unit,
+    onDismissed: () -> Unit,
 ) {
     var modalOpen by remember { mutableStateOf(false) }
     val inviteCode by remember { mutableStateOf(TextFieldValue()) }
@@ -141,6 +145,16 @@ fun ActionArea(
                 isLoading = isLoading,
             ) {
                 stringResource(R.string.start_curriculum_create_new)
+            }
+
+            TextButton(
+                onClick = onDismissed,
+            ) {
+                Text(
+                    stringResource(R.string.start_curriculum_skip),
+                    style = AppTypography.displaySmall,
+                    color = SecondaryText,
+                )
             }
         } else {
             Button(
