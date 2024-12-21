@@ -20,7 +20,7 @@ fun Headline(
     ) {
         Text(
             title(),
-            style = AppTypography.titleMedium,
+            style = if (highlight) AppTypography.titleLarge else AppTypography.titleMedium,
             color = if (highlight) PrimaryColor else Color.Unspecified,
         )
 

@@ -155,7 +155,7 @@
     <string name="options_info_app_name">Study Planner</string>
     <string name="options_info_app_description">Планировщик для студентов</string>
     <string name="options_info_curriculums_title">Учебные планы</string>
-    <string name="options_info_curriculums_add">Добавить учебный план</string>
+    <string name="options_info_curriculums_add">Добавить уч. план</string>
     <string name="options_info_other_title">Другое</string>
     <string name="options_info_other_sign_out">Выйти</string>
 

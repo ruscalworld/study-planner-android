@@ -29,7 +29,7 @@ fun EstimatedTimeRow(
                 R.string.common_task_card_time_estimation,
                 LocalContext.current.resources.getQuantityString(R.plurals.time_hours, hours, hours),
             ),
-            style = AppTypography.bodyMedium,
+            style = AppTypography.bodySmall,
         )
     }
 }

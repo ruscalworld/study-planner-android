@@ -57,7 +57,7 @@ fun DeadlineRow(
                     ),
                 )
             },
-            style = AppTypography.bodyMedium,
+            style = AppTypography.bodySmall,
         )
     }
 }

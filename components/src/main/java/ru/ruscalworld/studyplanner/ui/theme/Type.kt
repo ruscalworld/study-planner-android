@@ -3,9 +3,8 @@ package ru.ruscalworld.studyplanner.ui.theme
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-
-import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.text.googlefonts.Font
+import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import ru.ruscalworld.studyplanner.ui.R
@@ -66,12 +65,12 @@ val AppTypography = Typography(
     ),
     displayMedium = baseline.displayMedium.copy(
         fontFamily = displayFontFamily,
-        fontSize = TextUnit(20f, TextUnitType.Sp),
+        fontSize = TextUnit(18f, TextUnitType.Sp),
         lineHeight = TextUnit(1.3f, TextUnitType.Em),
     ),
     displaySmall = baseline.displaySmall.copy(
         fontFamily = displayFontFamily,
-        fontSize = TextUnit(18f, TextUnitType.Sp),
+        fontSize = TextUnit(16f, TextUnitType.Sp),
         lineHeight = TextUnit(1.3f, TextUnitType.Em),
     ),
     headlineLarge = baseline.headlineLarge.copy(
@@ -97,7 +96,7 @@ val AppTypography = Typography(
     ),
     titleMedium = baseline.titleMedium.copy(
         fontFamily = titleSemiFontFamily,
-        fontSize = TextUnit(26f, TextUnitType.Sp),
+        fontSize = TextUnit(24f, TextUnitType.Sp),
         lineHeight = TextUnit(1.3f, TextUnitType.Em),
     ),
     titleSmall = baseline.titleSmall.copy(fontFamily = titleFontFamily),
@@ -106,12 +105,15 @@ val AppTypography = Typography(
         fontFamily = bodyFontFamily,
         fontSize = TextUnit(18f, TextUnitType.Sp),
     ),
-    bodySmall = baseline.bodySmall.copy(fontFamily = bodyFontFamily),
+    bodySmall = baseline.bodySmall.copy(
+        fontFamily = bodyFontFamily,
+        fontSize = TextUnit(16f, TextUnitType.Sp),
+    ),
     labelLarge = baseline.labelLarge.copy(fontFamily = bodyFontFamily),
     labelMedium = baseline.labelMedium.copy(
         fontFamily = bodyFontFamily,
         color = SecondaryText,
-        fontSize = TextUnit(18f, TextUnitType.Sp)
+        fontSize = TextUnit(16f, TextUnitType.Sp)
     ),
     labelSmall = baseline.labelSmall.copy(
         fontFamily = bodyFontFamily,
