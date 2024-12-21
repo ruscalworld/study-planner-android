@@ -18,6 +18,7 @@ import ru.ruscalworld.studyplanner.adapters.DisciplineCard
 import ru.ruscalworld.studyplanner.common.InputGroup
 import ru.ruscalworld.studyplanner.common.TextFieldRow
 import ru.ruscalworld.studyplanner.ui.elements.card.CardButton
+import ru.ruscalworld.studyplanner.ui.elements.card.ConfirmationButton
 import ru.ruscalworld.studyplanner.ui.elements.card.NamedCardContainer
 import ru.ruscalworld.studyplanner.ui.elements.common.Headline
 import ru.ruscalworld.studyplanner.ui.elements.field.Field
@@ -28,6 +29,7 @@ fun CurriculumEditorScreenContent(
     viewModel: CurriculumEditorViewModel = hiltViewModel(),
     navigateToDiscipline: (Long) -> Unit,
     onDisciplineCreateRequest: () -> Unit,
+    onDeleteRequest: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
     val name by viewModel.name.collectAsState()
@@ -81,4 +83,17 @@ fun CurriculumEditorScreenContent(
             stringResource(R.string.editor_curriculum_disciplines_create)
         }
     }
+
+    ConfirmationButton(
+        onConfirm = onDeleteRequest,
+        content = { stringResource(R.string.editor_curriculum_delete_button) },
+        confirmContent = { stringResource(R.string.editor_curriculum_delete_confirm_button) },
+        icon = {
+            Icon(
+                painter = painterResource(R.drawable.fa_trash_can_solid),
+                tint = PrimaryText,
+                contentDescription = null,
+            )
+        }
+    )
 }

@@ -120,6 +120,8 @@
 
     <string name="editor_curriculum_disciplines_title">Дисциплины</string>
     <string name="editor_curriculum_disciplines_create">Добавить</string>
+    <string name="editor_curriculum_delete_button">Удалить уч. план</string>
+    <string name="editor_curriculum_delete_confirm_button">Точно удалить?</string>
 
     <!-- Editor -> Discipline -->
     <string name="editor_discipline_loading_title">Секундочку…</string>

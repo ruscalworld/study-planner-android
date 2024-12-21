@@ -110,6 +110,12 @@ fun NavRoot(
             CurriculumEditorScreen(
                 navigateToDiscipline = { id -> navController.navigate("editor/disciplines/$id") },
                 scaffoldPadding = scaffoldPadding,
+                navigateToOptions = {
+                    navController.navigate("options/info") {
+                        popUpTo(navController.graph.startDestinationId)
+                        launchSingleTop = true
+                    }
+                },
             )
         }
 

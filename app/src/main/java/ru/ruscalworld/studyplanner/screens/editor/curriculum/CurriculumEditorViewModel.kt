@@ -99,6 +99,23 @@ class CurriculumEditorViewModel @Inject constructor(
         }
     }
 
+    fun deleteCurriculum(then: () -> Unit) {
+        viewModelScope.launch {
+            val curriculum = uiState.value.curriculum
+            Log.d(TAG, "deleteCurriculum: ${curriculum?.id}")
+            if (curriculum == null) return@launch
+
+            try {
+                curriculumRepository.deleteCurriculum(curriculum.id)
+                activeCurriculumStore.storeActiveCurriculum(null)
+                then()
+            } catch (e: Exception) {
+                Log.e(TAG, "Deletion failed", e)
+                uiState.update { it.copy(error = e) }
+            }
+        }
+    }
+
     fun onNameChanged(value: TextFieldValue) {
         name.value = value
     }

@@ -114,6 +114,8 @@
 
     <string name="editor_curriculum_disciplines_title">Disciplines</string>
     <string name="editor_curriculum_disciplines_create">Add discipline</string>
+    <string name="editor_curriculum_delete_button">Delete curriculum</string>
+    <string name="editor_curriculum_delete_confirm_button">Are you sure?</string>
 
     <!-- Editor -> Discipline -->
     <string name="editor_discipline_loading_title">Loading…</string>

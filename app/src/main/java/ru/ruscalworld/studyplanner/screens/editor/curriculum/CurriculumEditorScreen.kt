@@ -23,6 +23,7 @@ import ru.ruscalworld.studyplanner.forms.discipline.create.CreateDisciplineModal
 fun CurriculumEditorScreen(
     viewModel: CurriculumEditorViewModel = hiltViewModel(),
     navigateToDiscipline: (Long) -> Unit,
+    navigateToOptions: () -> Unit,
     scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -50,7 +51,8 @@ fun CurriculumEditorScreen(
         CommonLayout(scaffoldPadding = scaffoldPadding) {
             CurriculumEditorScreenContent(
                 navigateToDiscipline = navigateToDiscipline,
-                onDisciplineCreateRequest = { disciplineModalOpen = true }
+                onDisciplineCreateRequest = { disciplineModalOpen = true },
+                onDeleteRequest = { viewModel.deleteCurriculum { navigateToOptions() } },
             )
         }
     }
