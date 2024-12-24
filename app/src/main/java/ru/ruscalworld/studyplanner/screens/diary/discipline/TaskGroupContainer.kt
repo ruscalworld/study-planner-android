@@ -15,7 +15,7 @@ fun TaskGroupContainer(
     NamedCardContainer(
         title = { taskGroup.name }
     ) {
-        for (task in tasks) {
+        for (task in tasks.sortedBy { it.first.id }) {
             TaskCard(
                 task = task.first,
                 progress = task.second,

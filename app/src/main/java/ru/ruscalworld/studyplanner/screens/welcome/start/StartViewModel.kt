@@ -50,7 +50,7 @@ class StartViewModel @Inject constructor(
                 Log.d(TAG, "Completed steps check completed (hasActiveCurriculum: $hasActiveCurriculum, isAuthenticated: $isAuthenticated)")
 
                 uiState.update { it.copy(
-                    isInitialLoading = isAuthenticated, // More smooth redirect
+                    isInitialLoading = isAuthenticated, // Smoother redirect
                     isCurriculumPicked = hasActiveCurriculum,
                     successfulAuth = isAuthenticated,
                 ) }

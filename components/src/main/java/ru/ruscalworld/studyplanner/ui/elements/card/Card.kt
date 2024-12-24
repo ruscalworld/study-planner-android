@@ -23,7 +23,7 @@ fun Card(
 fun Card(
     content: @Composable () -> Unit,
 ) {
-    Surface{
+    Surface {
         CardContent { content() }
     }
 }
