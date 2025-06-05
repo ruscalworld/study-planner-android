@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.ruscalworld.studyplanner.R
+import ru.ruscalworld.studyplanner.common.AvailableDraftsNote
 import ru.ruscalworld.studyplanner.common.CommonLayout
 import ru.ruscalworld.studyplanner.common.ExceptionHandler
 import ru.ruscalworld.studyplanner.common.LoadingScreen
@@ -18,6 +19,7 @@ fun DiaryHomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToDiscipline: (Long) -> Unit,
     navigateToTask: (Long, Long) -> Unit,
+    navigateToDrafts: () -> Unit,
     scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -40,6 +42,10 @@ fun DiaryHomeScreen(
 
     LoadingVisibility(isLoading = state.isLoading) {
         CommonLayout(scaffoldPadding = scaffoldPadding) {
+            state.drafts?.let {
+                if (it.isNotEmpty()) AvailableDraftsNote(it.size, navigateToDrafts)
+            }
+
             state.prioritizedTasks?.let {
                 PrioritizedTasksBlock(it, navigateToTask)
             }

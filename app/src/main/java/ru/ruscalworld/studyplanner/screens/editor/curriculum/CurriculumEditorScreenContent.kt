@@ -15,6 +15,7 @@ import androidx.compose.ui.text.toUpperCase
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.adapters.DisciplineCard
+import ru.ruscalworld.studyplanner.common.AvailableDraftsNote
 import ru.ruscalworld.studyplanner.common.InputGroup
 import ru.ruscalworld.studyplanner.common.TextFieldRow
 import ru.ruscalworld.studyplanner.ui.elements.card.CardButton
@@ -28,12 +29,17 @@ import ru.ruscalworld.studyplanner.ui.theme.PrimaryText
 fun CurriculumEditorScreenContent(
     viewModel: CurriculumEditorViewModel = hiltViewModel(),
     navigateToDiscipline: (Long) -> Unit,
+    navigateToDrafts: () -> Unit,
     onDisciplineCreateRequest: () -> Unit,
     onDeleteRequest: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
     val name by viewModel.name.collectAsState()
     val semesterNo by viewModel.semesterNo.collectAsState()
+
+    state.drafts?.let {
+        if (it.isNotEmpty()) AvailableDraftsNote(it.size, navigateToDrafts)
+    }
 
     Headline(
         title = { stringResource(R.string.editor_curriculum_title).toUpperCase(Locale.current) },

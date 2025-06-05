@@ -24,6 +24,7 @@ fun InfoScreen(
     viewModel: InfoViewModel = hiltViewModel(),
     navigateToStart: () -> Unit,
     navigateToPickCurriculum: () -> Unit,
+    navigateToDrafts: () -> Unit,
     navigateToHome: () -> Unit,
     scaffoldPadding: PaddingValues,
 ) {
@@ -60,7 +61,10 @@ fun InfoScreen(
                 .verticalScroll(rememberScrollState()),
         ) {
             Header()
-            Options(navigateToPickCurriculum = navigateToPickCurriculum)
+            Options(
+                navigateToPickCurriculum = navigateToPickCurriculum,
+                navigateToDrafts = navigateToDrafts,
+            )
             Box(modifier = Modifier.padding(scaffoldPadding))
         }
     }

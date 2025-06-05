@@ -23,6 +23,7 @@ import ru.ruscalworld.studyplanner.ui.theme.PrimaryText
 fun Options(
     viewModel: InfoViewModel = hiltViewModel(),
     navigateToPickCurriculum: () -> Unit,
+    navigateToDrafts: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -57,6 +58,19 @@ fun Options(
         }
 
         NamedCardContainer(title = { stringResource(R.string.options_info_other_title) }) {
+            CardButton(
+                onClick = { navigateToDrafts() },
+                icon = {
+                    Icon(
+                        painter = painterResource(R.drawable.fa_note_sticky_solid),
+                        contentDescription = stringResource(R.string.options_info_other_drafts),
+                        tint = PrimaryText,
+                    )
+                }
+            ) {
+                stringResource(R.string.options_info_other_drafts)
+            }
+
             CardButton(
                 onClick = { viewModel.signOut() },
                 icon = {

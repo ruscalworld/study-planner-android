@@ -12,6 +12,7 @@ import ru.ruscalworld.studyplanner.screens.diary.home.DiaryHomeScreen
 import ru.ruscalworld.studyplanner.screens.diary.task.TaskScreen
 import ru.ruscalworld.studyplanner.screens.editor.curriculum.CurriculumEditorScreen
 import ru.ruscalworld.studyplanner.screens.editor.discipline.DisciplineEditorScreen
+import ru.ruscalworld.studyplanner.screens.editor.draft.DraftListScreen
 import ru.ruscalworld.studyplanner.screens.editor.task.TaskEditorScreen
 import ru.ruscalworld.studyplanner.screens.options.info.InfoScreen
 import ru.ruscalworld.studyplanner.screens.welcome.curriculum.PickCurriculumScreen
@@ -76,6 +77,7 @@ fun NavRoot(
                 navigateToDiscipline = { id -> navController.navigate("diary/disciplines/$id") },
                 navigateToTask = { disciplineId, taskId -> navController.navigate("diary/disciplines/$disciplineId/tasks/$taskId") },
                 scaffoldPadding = scaffoldPadding,
+                navigateToDrafts = { navController.navigate("editor/drafts") }
             )
         }
 
@@ -116,6 +118,7 @@ fun NavRoot(
                         launchSingleTop = true
                     }
                 },
+                navigateToDrafts = { navController.navigate("editor/drafts") }
             )
         }
 
@@ -153,6 +156,12 @@ fun NavRoot(
             )
         }
 
+        composable("editor/drafts") {
+            DraftListScreen(
+                scaffoldPadding = scaffoldPadding,
+            )
+        }
+
         composable("options/info") {
             InfoScreen(
                 navigateToHome = {
@@ -185,7 +194,8 @@ fun NavRoot(
                     }
                 },
 
-                scaffoldPadding = scaffoldPadding,
+                navigateToDrafts = { navController.navigate("editor/drafts") },
+                scaffoldPadding = scaffoldPadding
             )
         }
     }

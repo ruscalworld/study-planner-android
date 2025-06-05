@@ -10,6 +10,7 @@ import ru.ruscalworld.studyplanner.core.auth.AuthenticationManager
 import ru.ruscalworld.studyplanner.core.repository.CurriculumRepository
 import ru.ruscalworld.studyplanner.core.repository.DisciplineLinkRepository
 import ru.ruscalworld.studyplanner.core.repository.DisciplineRepository
+import ru.ruscalworld.studyplanner.core.repository.DraftRepository
 import ru.ruscalworld.studyplanner.core.repository.TaskGroupRepository
 import ru.ruscalworld.studyplanner.core.repository.TaskLinkRepository
 import ru.ruscalworld.studyplanner.core.repository.TaskRepository
@@ -18,6 +19,7 @@ import ru.ruscalworld.studyplanner.provisioning.backend.PlannerClient
 import ru.ruscalworld.studyplanner.provisioning.backend.repository.PlannerCurriculumRepository
 import ru.ruscalworld.studyplanner.provisioning.backend.repository.PlannerDisciplineLinkRepository
 import ru.ruscalworld.studyplanner.provisioning.backend.repository.PlannerDisciplineRepository
+import ru.ruscalworld.studyplanner.provisioning.backend.repository.PlannerDraftRepository
 import ru.ruscalworld.studyplanner.provisioning.backend.repository.PlannerTaskGroupRepository
 import ru.ruscalworld.studyplanner.provisioning.backend.repository.PlannerTaskLinkRepository
 import ru.ruscalworld.studyplanner.provisioning.backend.repository.PlannerTaskRepository
@@ -71,4 +73,8 @@ class AppModule {
     @Provides
     @Singleton
     fun getTaskLinkRepository(client: PlannerClient): TaskLinkRepository = PlannerTaskLinkRepository(client)
+
+    @Provides
+    @Singleton
+    fun getDraftRepository(client: PlannerClient): DraftRepository = PlannerDraftRepository(client)
 }

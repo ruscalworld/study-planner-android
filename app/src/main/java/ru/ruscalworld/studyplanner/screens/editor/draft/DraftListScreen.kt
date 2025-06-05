@@ -1,4 +1,4 @@
-package ru.ruscalworld.studyplanner.screens.editor.curriculum
+package ru.ruscalworld.studyplanner.screens.editor.draft
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.SnackbarHost
@@ -17,19 +17,18 @@ import ru.ruscalworld.studyplanner.common.CommonLayout
 import ru.ruscalworld.studyplanner.common.ExceptionHandler
 import ru.ruscalworld.studyplanner.common.LoadingScreen
 import ru.ruscalworld.studyplanner.common.LoadingVisibility
-import ru.ruscalworld.studyplanner.forms.discipline.create.CreateDisciplineModal
+import ru.ruscalworld.studyplanner.core.model.Draft
+import ru.ruscalworld.studyplanner.forms.draft.update.UpdateDraftModal
 
 @Composable
-fun CurriculumEditorScreen(
-    viewModel: CurriculumEditorViewModel = hiltViewModel(),
-    navigateToDiscipline: (Long) -> Unit,
-    navigateToOptions: () -> Unit,
-    navigateToDrafts: () -> Unit,
+fun DraftListScreen(
+    viewModel: DraftListViewModel = hiltViewModel(),
     scaffoldPadding: PaddingValues,
 ) {
     val state by viewModel.uiState.collectAsState()
+    var draftCreating by remember { mutableStateOf(false) }
+    var editedDraft by remember { mutableStateOf<Draft?>(null) }
     val snackbarHostState = remember { SnackbarHostState() }
-    var disciplineModalOpen by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.load()
@@ -43,34 +42,31 @@ fun CurriculumEditorScreen(
 
     if (state.isLoading) {
         LoadingScreen(
-            title = { stringResource(R.string.editor_curriculum_loading_title) },
-            description = { stringResource(R.string.editor_curriculum_loading_description) },
+            title = { stringResource(R.string.editor_discipline_loading_title) },
+            description = { stringResource(R.string.editor_discipline_loading_description) },
         )
     }
 
     LoadingVisibility(isLoading = state.isLoading) {
         CommonLayout(scaffoldPadding = scaffoldPadding) {
-            CurriculumEditorScreenContent(
-                navigateToDiscipline = navigateToDiscipline,
-                onDisciplineCreateRequest = { disciplineModalOpen = true },
-                onDeleteRequest = { viewModel.deleteCurriculum { navigateToOptions() } },
-                navigateToDrafts = navigateToDrafts,
+            DraftListScreenContent(
+                onEditRequest = { editedDraft = it },
+                onCreateRequest = { draftCreating = true },
             )
         }
     }
 
-    state.curriculum?.let {
-        CreateDisciplineModal(
-            curriculumId = it.id,
-            snackbarHostState = snackbarHostState,
-            modalOpen = disciplineModalOpen,
-            onClosed = { disciplineModalOpen = false },
-            onDisciplineCreated = { discipline ->
-                viewModel.onDisciplineAdded(discipline)
-                disciplineModalOpen = false
-            },
-        )
-    }
+    UpdateDraftModal(
+        modalOpen = draftCreating || editedDraft != null,
+        onClosed = {
+            draftCreating = false
+            editedDraft = null
+        },
+        draft = editedDraft,
+        onDraftSaved = { draft -> viewModel.onDraftSaved() },
+        onDraftDeleted = { viewModel.onDraftDeleted() },
+        snackbarHostState = snackbarHostState,
+    )
 
     SnackbarHost(hostState = snackbarHostState)
 }

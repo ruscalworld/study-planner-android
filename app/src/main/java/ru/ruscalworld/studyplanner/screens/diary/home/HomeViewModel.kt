@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import ru.ruscalworld.studyplanner.R
 import ru.ruscalworld.studyplanner.core.repository.CurriculumRepository
 import ru.ruscalworld.studyplanner.core.repository.DisciplineRepository
+import ru.ruscalworld.studyplanner.core.repository.DraftRepository
 import ru.ruscalworld.studyplanner.core.repository.TaskRepository
 import ru.ruscalworld.studyplanner.settings.ActiveCurriculumStore
 import ru.ruscalworld.studyplanner.ui.exceptions.VisibleException
@@ -22,6 +23,7 @@ class HomeViewModel @Inject constructor(
     private val activeCurriculumStore: ActiveCurriculumStore,
     private val curriculumRepository: CurriculumRepository,
     private val disciplineRepository: DisciplineRepository,
+    private val draftRepository: DraftRepository,
     private val taskRepository: TaskRepository,
 ) : ViewModel() {
     companion object {
@@ -46,6 +48,10 @@ class HomeViewModel @Inject constructor(
                     disciplineRepository.getDisciplines(curriculumId)
                 }
 
+                val draftsFetcher = async {
+                    draftRepository.getDrafts()
+                }
+
                 val disciplines = disciplinesFetcher.await()
 
                 val disciplineProgressFetcher = disciplines.map {
@@ -64,6 +70,7 @@ class HomeViewModel @Inject constructor(
 
                     disciplines = disciplineProgressFetcher.awaitAll(),
                     prioritizedTasks = tasksProgressFetcher.awaitAll(),
+                    drafts = draftsFetcher.await()
                 )
 
                 uiState.value = state

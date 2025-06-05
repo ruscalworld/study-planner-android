@@ -14,26 +14,34 @@ import ru.ruscalworld.studyplanner.provisioning.backend.dto.auth.Credentials
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 val BEARER_TOKEN = stringPreferencesKey("bearer_token")
+val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
 val ACTIVE_CURRICULUM = longPreferencesKey("active_curriculum")
 
 class DataStoreSettingsProvider(private val context: Context) : CredentialsSupplier, ActiveCurriculumStore {
     override suspend fun loadCredentials(): Credentials? {
-        val flow = context.dataStore.data.map { preferences -> preferences[BEARER_TOKEN] }
+        val accessFlow = context.dataStore.data.map { preferences -> preferences[BEARER_TOKEN] }
+        val refreshFlow = context.dataStore.data.map { preferences -> preferences[REFRESH_TOKEN] }
 
-        return flow.firstOrNull()?.let {
-            if (it.isNotEmpty()) Credentials(it, "Bearer") else null
-        }
+        val accessToken = accessFlow.firstOrNull()?.let { if (it.isNotEmpty()) it else null }
+        val refreshToken = refreshFlow.firstOrNull()?.let { if (it.isNotEmpty()) it else null }
+
+        if (accessToken == null || refreshToken == null)
+            return null
+
+        return Credentials(accessToken, refreshToken, "Bearer")
     }
 
     override suspend fun storeCredentials(credentials: Credentials) {
         context.dataStore.edit { preferences ->
             preferences[BEARER_TOKEN] = credentials.accessToken
+            preferences[REFRESH_TOKEN] = credentials.refreshToken
         }
     }
 
     override suspend fun clearCredentials() {
         context.dataStore.edit { preferences ->
             preferences.remove(BEARER_TOKEN)
+            preferences.remove(REFRESH_TOKEN)
         }
     }
 

@@ -19,6 +19,7 @@ import ru.ruscalworld.studyplanner.core.model.Curriculum
 import ru.ruscalworld.studyplanner.core.model.Discipline
 import ru.ruscalworld.studyplanner.core.repository.CurriculumRepository
 import ru.ruscalworld.studyplanner.core.repository.DisciplineRepository
+import ru.ruscalworld.studyplanner.core.repository.DraftRepository
 import ru.ruscalworld.studyplanner.screens.editor.discipline.DisciplineEditorViewModel
 import ru.ruscalworld.studyplanner.settings.ActiveCurriculumStore
 import ru.ruscalworld.studyplanner.ui.exceptions.VisibleException
@@ -30,6 +31,7 @@ class CurriculumEditorViewModel @Inject constructor(
     private val curriculumRepository: CurriculumRepository,
     private val disciplineRepository: DisciplineRepository,
     private val activeCurriculumStore: ActiveCurriculumStore,
+    private val draftRepository: DraftRepository,
 ) : ViewModel() {
     companion object {
         const val TAG = "CurriculumEditorViewModel"
@@ -59,6 +61,7 @@ class CurriculumEditorViewModel @Inject constructor(
 
                 val curriculumFetcher = async { curriculumRepository.getCurriculum(curriculumId) }
                 val disciplinesFetcher = async { disciplineRepository.getDisciplines(curriculumId) }
+                val draftsFetcher = async { draftRepository.getDrafts() }
 
                 val curriculum = curriculumFetcher.await()
 
@@ -69,6 +72,7 @@ class CurriculumEditorViewModel @Inject constructor(
                     isLoading = false,
                     curriculum = curriculum,
                     disciplines = disciplinesFetcher.await(),
+                    drafts = draftsFetcher.await(),
                 )
             } catch (e: Exception) {
                 Log.e(TAG, "Data fetching failed", e)

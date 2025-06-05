@@ -46,6 +46,15 @@
     <string name="common_task_card_deadline_expired">%1$s назад</string>
     <string name="common_task_card_time_estimation">≈ %1$s</string>
 
+    <!-- Available Drafts Note -->
+    <string name="common_drafts_available">%1$s</string>
+    <plurals name="common_drafts_available_count">
+        <item quantity="one">%1$s черновик</item>
+        <item quantity="few">%1$s черновика</item>
+        <item quantity="many">%1$s черновиков</item>
+        <item quantity="other">%1$s черновиков</item>
+    </plurals>
+
     <!-- SCREENS -->
     <!-- Start -> Auth -->
     <string name="auth_error_failed">Ошибка аутентификации</string>
@@ -156,6 +165,14 @@
     <string name="editor_task_deadline_pick_confirm">Установить срок</string>
     <string name="editor_task_deadline_pick_dismiss">Отмена</string>
 
+    <!-- Editor -> Drafts -->
+    <string name="editor_drafts_loading_title">Один момент…</string>
+    <string name="editor_drafts_loading_description">Загружаем черновики</string>
+    <string name="editor_drafts_unknown_error">Не удалось загрузить черновики</string>
+
+    <string name="editor_drafts_title">Черновики</string>
+    <string name="editor_drafts_create_button">Создать</string>
+
     <!-- Options -> Info -->
     <string name="options_info_loading_title">Секунду…</string>
     <string name="options_info_loading_description">Загружаем твои учебные планы</string>
@@ -166,6 +183,7 @@
     <string name="options_info_app_description">Планировщик для студентов</string>
     <string name="options_info_curriculums_title">Учебные планы</string>
     <string name="options_info_curriculums_add">Добавить уч. план</string>
+    <string name="options_info_other_drafts">Черновики</string>
     <string name="options_info_other_title">Другое</string>
     <string name="options_info_other_sign_out">Выйти</string>
 
@@ -204,4 +222,12 @@
     <string name="form_link_create_error_empty_name">Пожалуйста, укажите название</string>
     <string name="form_link_create_error_invalid_url">Пожалуйста, укажите корректный URL</string>
     <string name="form_link_create_unknown_error">Не удалось создать ссылку</string>
+
+    <!-- Update draft -->
+    <string name="form_draft_update_title">Черновик</string>
+    <string name="form_draft_update_text_label">Текст</string>
+    <string name="form_draft_update_confirm_text">Сохранить</string>
+    <string name="form_draft_update_unknown_error">Не удалось сохранить черновик</string>
+    <string name="form_draft_update_delete_button">Удалить</string>
+    <string name="form_draft_update_delete_confirm_button">Точно удалить?</string>
 </resources>

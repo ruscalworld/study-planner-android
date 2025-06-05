@@ -20,6 +20,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import ru.ruscalworld.studyplanner.core.auth.AuthenticationManager
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.auth.Credentials
+import ru.ruscalworld.studyplanner.provisioning.backend.dto.auth.RefreshParams
 import ru.ruscalworld.studyplanner.provisioning.backend.dto.auth.SignInParams
 
 class PlannerClient(private val credentialsSupplier: CredentialsSupplier) : AuthenticationManager {
@@ -29,6 +30,18 @@ class PlannerClient(private val credentialsSupplier: CredentialsSupplier) : Auth
     }
 
     private var tokens: BearerTokens? = null
+
+    val refreshClient: HttpClient = HttpClient(CIO) {
+        install(ContentNegotiation) {
+            json(Json {
+                ignoreUnknownKeys = true
+            })
+        }
+
+        defaultRequest {
+            url("https://$API_HOST/v1/auth/refresh")
+        }
+    }
 
     val httpClient: HttpClient = HttpClient(CIO) {
         install(ContentNegotiation) {
@@ -49,7 +62,7 @@ class PlannerClient(private val credentialsSupplier: CredentialsSupplier) : Auth
 
                     if (credentials != null) {
                         Log.i(TAG, "Loaded credentials")
-                        tokens = BearerTokens(credentials.accessToken, credentials.accessToken)
+                        tokens = BearerTokens(credentials.accessToken, credentials.refreshToken)
                         tokens
                     } else {
                         Log.i(TAG, "No stored credentials found")
@@ -58,15 +71,23 @@ class PlannerClient(private val credentialsSupplier: CredentialsSupplier) : Auth
                 }
 
                 refreshTokens {
+                    Log.d(TAG, "refreshTokens invoked")
+
                     if (response.request.url.encodedPath.contains("auth/"))
                         return@refreshTokens null
 
+                    val refreshToken = oldTokens?.refreshToken
+                    if (refreshToken == null)
+                        return@refreshTokens null
+
                     Log.d(TAG, "Refreshing an access token")
-                    val response: Credentials = client.post("auth/refresh").body()
+                    val response: Credentials = refreshClient.post("auth/refresh") {
+                        setBody(RefreshParams(refreshToken))
+                    }.body()
                     credentialsSupplier.storeCredentials(response)
 
-                    Log.i(TAG, "Access token refresh completed")
-                    BearerTokens(response.accessToken, response.accessToken)
+                    Log.i(TAG, "Token refresh completed")
+                    BearerTokens(response.accessToken, response.refreshToken)
                 }
 
                 sendWithoutRequest { request -> request.url.host == API_HOST }
